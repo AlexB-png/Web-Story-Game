@@ -3,15 +3,15 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
-var elements = (
-  <div>
-    <div className='Div'>
-      <h1>This is in a div</h1>
-    </div>
-    <h1>And this isn't</h1>
-  </div>
-)
+function Button(Text) {
+  const MyFunc = () => {
+    alert('Hello World')
+  };
+  return (
+    <button onClick={MyFunc} disabled={false}>{Text.text}</button>
+  );
+}
 
 createRoot(document.getElementById('root')).render(
-  elements
+  <Button text='Hello Button'/>
 )
