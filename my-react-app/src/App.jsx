@@ -1,42 +1,64 @@
-import { BrowserRouter } from 'react-router-dom'
+import { Routes, Route, Navigate, redirect, useNavigate, replace } from "react-router-dom";
 import './App.scss'
 
-const loginRequest = async () => {await fetch("http://127.0.0.1:5000/login")}
+var LoginStatus = false
 
-var message = await fetch("http://127.0.0.1:5000/login", {
-  method: "POST",
-  headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({username:'Test', password:'Test2'})
+function NewAccount() {
+  if (LoginStatus) {
+    return (
+      <h1>Test</h1>
+    )}
+  else {
+    return <Navigate to='/' replace />
+  }
 }
-)
-message = await message.json()
-const Final = message.message
 
 function LoginPage() {
+  const navigate = useNavigate();
+
+  async function NewPageRequest() {
+    LoginStatus = true
+    navigate("/Home", {replace: true})
+  }
+  
   return (
-  <div className='LoginPage'>
-    <div className='username'>
-      <div className='user'>
-        <h1>Username:</h1>
-        <input type='text' id='Username'></input>
+  <>
+  <div className='TransWrapper'>
+    <div className='LoginPage'>
+      <div className='Username'>
+        <h1 className='title'>Username:</h1>
+        <input type="text" id='UsernameInput'></input>
       </div>
-    </div>
-    
-    <div className='password'>
-      <div className='pass'>
+
+      <div className='Password'>
         <h1>Password:</h1>
-        <input type='password' id='Password'></input>
+        <input type="text" id='PasswordInput'></input>
+      </div>
+
+      <div className='LoginButton'>
+        <button onClick={NewPageRequest}>Login!</button>
+      </div>
+
+      <div className='Links'>
+        <a href=''>Forgot Password?</a>
+        <a href=''>Make an account?</a>
+      </div>
+
+      <div className='Status'>
+        <h1 id='StatusMessage'>Test</h1>
       </div>
     </div>
   </div>
+  </>
 )}
 
 function App() {
   return (
     <>
-      <header>
-        <LoginPage />
-      </header>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/Home" element={<NewAccount />} />
+      </Routes>
     </>
   )
 }
