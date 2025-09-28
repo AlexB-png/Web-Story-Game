@@ -1,115 +1,152 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
 
+
+// Applies pixel text to all text
 * {
     font-family: "Pixelify Sans", sans-serif;
-    font-optical-sizing: auto;
     font-weight: 500;
-    font-style: normal;
 }
+//
 
+// Defaults for every router page
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0;   // Why does default margin exist //
+    padding: 0;  // Why does default padding exist //
     background: linear-gradient(245deg,rgb(199, 191, 235) 0%, rgb(114, 166, 226) 100%);
+    overflow: hidden;  // I definitely dont want to have to scroll //
 }
+//
 
-.TransWrapper {
+
+// ROUTERS
+
+// Router "/"
+.LoginWrapper {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-.LoginPage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 4vw;
-    gap: 5vh;
-    background: rgba(97, 97, 97, 0.1);
-    border-radius: 1vw;
-
-
-    .Username, .Password {
+    .LoginPage {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: center;
-        max-width: 1025px;
-        gap: 5vw;
+        flex-direction: column;
+        padding: 4vw;
+        gap: 5vh;
+        background: rgba(97, 97, 97, 0.1);
+        border-radius: 1vw;
 
-        input {
-            width: 25vw;
-            height: 2.5rem;
-            text-indent: 1vw;
-            border-radius: clamp(0.5vw,0.75vw,1vw);
-            font-size: 2ch;
-        }
 
-        h1 {
-            font-size: 3vw;
-        }
-
-        .title {
-            margin: 0;
-        }
-
-        @media (max-width: 1370px) {
-            flex-direction: column;
-            justify-content: center;
+        .Username, .Password {
+            display: flex;
+            justify-content: space-evenly;
             align-items: center;
-            gap: 3rem;
+            max-width: 1025px;
+            gap: 5vw;
 
             input {
-                width: 50vw;
-                height: 3vh;
+                width: 25vw;
+                height: 2.5rem;
+                text-indent: 1vw;
+                border-radius: clamp(0.5vw,0.75vw,1vw);
                 font-size: 2ch;
             }
 
             h1 {
-                font-size: 5vw;
+                font-size: 3vw;
+            }
+
+            .title {
+                margin: 0;
+            }
+
+            @media (max-width: 1370px) {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+
+                input {
+                    width: 50vw;
+                    height: 3vh;
+                    font-size: 2ch;
+                }
+
+                h1 {
+                    font-size: 5vw;
+                }
             }
         }
-    }
 
-    .LoginButton {
-        button {
-            width: 40vw;
-            height: 5vh;
-            border-radius: 0.5vw;
-            font-size: clamp(1.5rem,1vw,1vw);
-            background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
-            border-color: rgb(164, 202, 247);
-            transition: transform 0.2s ease-in-out;
+        .LoginButton {
+            button {
+                width: 40vw;
+                height: 5vh;
+                border-radius: 0.5vw;
+                font-size: clamp(1.5rem,1vw,1vw);
+                background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+                border-color: rgb(164, 202, 247);
+                transition: transform 0.2s ease-in-out;
+            }
+
+            button:hover {
+                transform: scale(1.05);
+            }
         }
 
-        button:hover {
-            transform: scale(1.05);
-        }
-    }
+        .Links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            gap: 5vh;
+            
+            * {
+                font-size: clamp(2rem,2vw,3vw);
+                transition: transform 0.2s ease-in-out;
+            }
 
-    .Links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: center;
-        gap: 5vh;
+            *:hover {
+                transform: scale(1.05);
+            }
+        }
+
+        // Default for the status message
+        .Status {  // This is the div where the text is stored //
+            max-height: 0;
+            transition: max-height 0.2s ease-in-out;
+
+            .StatusMessage {  // This is the actual text //
+                opacity: 0;
+                transition: opacity 0.2s ease-in-out;
+            }
+
+            .StatusMessage.visible {
+                opacity: 1;
+            }
+        }
+        //
         
-        a {
-            font-size: clamp(1rem,1vw,2vw);
-            transition: transform 0.2s ease-in-out;
-        }
-
-        a:hover {
-            transform: scale(1.05);
-        }
-    }
-
-    .Status {
-        h1 {
-            display: none;
+        // After "login!" button is pressed
+        .Status.visible {
+            max-height: 3vh;  // its a height for the transition //
         }
     }
 }
+//
 
+// Router "/NewAccount"
+.SignUp {
+    height: 100vh;
+    background: linear-gradient(245deg,rgb(114, 166, 226) 0%, rgb(199, 191, 235) 100%);
+}
+//
 
+// Router "/Home"
+.HomePage {
+    // TBA home page rules
+}
+//
+
+//

@@ -1,5 +1,6 @@
 // Imports
-import { Routes, Route, Navigate, redirect, useNavigate, replace } from "react-router-dom";
+import { Routes, Route, Navigate, redirect, useNavigate, replace, Link} from "react-router-dom";
+import { useEffect } from "react";
 import './App.scss'
 //
 
@@ -7,24 +8,14 @@ import './App.scss'
 var LoginStatus = false  // Changes if the login was successful //
 // 
 
-// TBA The redirect for the login page
-function NewAccount() {
-  if (LoginStatus) {
-    return (
-      <h1>Test</h1>
-    )}
-  else {
-    return <Navigate to='/' replace />
-  }
-}
-//
-
 // Runs when a delay is needed
 function delay(miliseconds) {
   return new Promise(timeout => setTimeout(timeout, miliseconds));
 }
 //
 
+
+// Put Route Pages Here
 function LoginPage() {
   // This is needed for redirecting through router
   const navigate = useNavigate();
@@ -62,7 +53,7 @@ function LoginPage() {
       LoginStatus = true
       SuccessRequest()
       await delay(2000)
-      navigate("/Home", {replace: true})
+      navigate("/Home", {replace: true})  // Send user to main page //
     //
     } else {  // If result.message is not True (Boolean)
       console.log('Failed')
@@ -76,7 +67,10 @@ function LoginPage() {
   // Successful login
   function SuccessRequest() {
     // Gets the text thats going to change
+    const SuccessDiv = document.getElementById('StatusDiv')
     const SuccessText = document.getElementById('StatusMessage')
+    SuccessText.classList.toggle('visible')
+    SuccessDiv.classList.toggle('visible')
     //
 
     // Changes said text 
@@ -93,7 +87,11 @@ function LoginPage() {
   // Failed Login
   async function FailedRequest() {
     // Gets the text thats going to change
+    const FailedDiv = document.getElementById('StatusDiv')
     const FailedText = document.getElementById('StatusMessage')
+    
+    FailedDiv.classList.add('visible')
+    FailedText.classList.add('visible')
     //
     
     // Changes said text 
@@ -109,9 +107,10 @@ function LoginPage() {
     await delay(2000)
     //
     
-    // If logged in DO NOT hide the text
+    // If logged in (True) DO NOT hide the text
     if (!LoginStatus){
-      FailedText.style.display = 'None'
+      FailedText.classList.remove('visible')
+      FailedDiv.classList.remove('visible')
     }
     //
   }
@@ -119,9 +118,10 @@ function LoginPage() {
 
   // Webpage for login
   return (
-  <>
-  <div className='TransWrapper'>
+  <div className='LoginWrapper'>
+    
     <div className='LoginPage'>
+      
       <div className='Username'>
         <h1 className='title'>Username:</h1>
         <input type="text" id='UsernameInput'></input>
@@ -138,16 +138,59 @@ function LoginPage() {
 
       <div className='Links'>
         <a href=''>Forgot Password?</a>
-        <a href=''>Make an account?</a>
+        <Link to="/NewAccount">Make an account?</Link>
       </div>
 
-      <div className='Status'>
-        <h1 id='StatusMessage'>Test</h1>
+      <div className='Status' id='StatusDiv'>
+        <h1 id='StatusMessage' className="StatusMessage">Test</h1>
       </div>
+    
     </div>
+  
   </div>
-  </>)}
+  )}
   //
+
+// TBA The Registration Page
+function NewAccount() {
+  // This is needed for redirecting through router
+  const navigate = useNavigate();
+  //
+
+  // Webpage for Sign Up
+  return (
+    <div className="SignUp">
+      <h1>Works!</h1>
+    </div>
+  )
+  //
+}
+//
+
+// TBA the home page after login
+function Home() {
+  // This is needed for redirecting through router
+  const navigate = useNavigate();
+  //
+
+  // This Runs After The Page Is Rendered
+  useEffect(() => {
+    if (!LoginStatus) {  // if LoginStatus is (not TRUE = (False (Bool))) 
+      console.log('/Home cannot be accessed until login at "/" has been completed')
+      navigate("/", {replace: true})
+    }
+  })
+  // After This Only Runs After LoginStatus is True (bool) //
+
+  return (
+    <div className="HomePage">
+      <h1>Welcome to the home page!</h1>
+    </div>
+  )
+}
+//
+
+// 
 
 // Add routers here "/" is where the page begins
 function App() {
@@ -155,7 +198,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/Home" element={<NewAccount />} />
+        <Route path="/NewAccount" element={<NewAccount />} />
+        <Route path="/Home" element={<Home />} />
       </Routes>
     </>
   )
