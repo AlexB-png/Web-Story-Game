@@ -129,7 +129,7 @@ function LoginPage() {
 
       <div className='Password'>
         <h1>Password:</h1>
-        <input type="text" id='PasswordInput'></input>
+        <input type="password" id='PasswordInput'></input>
       </div>
 
       <div className='LoginButton'>
@@ -157,10 +157,34 @@ function NewAccount() {
   const navigate = useNavigate();
   //
 
+  async function CreateButtonClicked() {
+    const Username = document.getElementById('NewUser').value
+    const Password = document.getElementById('NewPass').value
+    
+    console.log(Username)
+    console.log(Password)
+    navigate("/Home", {replace: true})
+  }
+  
+
   // Webpage for Sign Up
   return (
-    <div className="SignUp">
-      <h1>Works!</h1>
+    <div className="SignUpWrapper">
+      <div className="SignUp">
+        <div className="NewUserInput">
+          <h1>Username:</h1>
+          <input type="text" id='NewUser'></input>
+        </div>
+
+        <div className="NewPassInput">
+          <h1>Username:</h1>
+          <input type="password" id='NewPass'></input>
+        </div>
+
+        <div className="CreateNewButton">
+          <button onClick={CreateButtonClicked} className="CreateButton">Create Account!</button>
+        </div>
+      </div>
     </div>
   )
   //
@@ -194,6 +218,7 @@ function Home() {
 
 // Add routers here "/" is where the page begins
 function App() {
+
   return (
     <>
       <Routes>

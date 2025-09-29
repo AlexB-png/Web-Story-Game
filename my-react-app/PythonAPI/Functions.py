@@ -10,6 +10,8 @@ def Login(username, password):
     else:
         return False
 
+def Create(username, password):
+    connection = sqlite3.connect('Data.sql')
 
 if __name__ == '__main__':
     # THIS IS STRICTLY FOR TESTING PURPOSES #
