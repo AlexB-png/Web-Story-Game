@@ -161,8 +161,17 @@ function NewAccount() {
     const Username = document.getElementById('NewUser').value
     const Password = document.getElementById('NewPass').value
     
-    console.log(Username)
-    console.log(Password)
+    const response = await fetch("http://127.0.0.1:5000/login", {
+      method: 'POST',  // Allows flask to recieve data from the request //
+      headers : {
+        "Content-Type": "application/json"  // Tells the server that its recieving JSON data //
+      },
+      body: JSON.stringify({Username, Password})  // Converts { } to JSON formatting
+    })
+
+    const result = await response.json()
+    console.log(result.Status)
+
     navigate("/Home", {replace: true})
   }
   
@@ -171,6 +180,7 @@ function NewAccount() {
   return (
     <div className="SignUpWrapper">
       <div className="SignUp">
+        
         <div className="NewUserInput">
           <h1>Username:</h1>
           <input type="text" id='NewUser'></input>
@@ -184,6 +194,8 @@ function NewAccount() {
         <div className="CreateNewButton">
           <button onClick={CreateButtonClicked} className="CreateButton">Create Account!</button>
         </div>
+
+
       </div>
     </div>
   )

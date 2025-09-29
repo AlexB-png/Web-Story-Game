@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from Functions import Login
+from Functions import Login, Create
 
 app = Flask(__name__)
 CORS(app)
@@ -19,6 +19,8 @@ def account():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+    status = Create(username, password)
+    return jsonify({"Status": status})
 
 if __name__ == '__main__':
     app.run(debug=True)
