@@ -15,6 +15,10 @@ def home():
     return jsonify({"message": Request})
 
 @app.route('/create', methods=['POST'])
+def account():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
 
 if __name__ == '__main__':
     app.run(debug=True)
