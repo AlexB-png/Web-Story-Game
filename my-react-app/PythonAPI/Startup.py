@@ -2,7 +2,7 @@ import sqlite3
 
 
 # Connection to PySQL database #
-connection = sqlite3.connect(r"my-react-app\Data.sql")
+connection = sqlite3.connect(r"Data.db")
 ##
 
 # Makes the cursor to execute commands #

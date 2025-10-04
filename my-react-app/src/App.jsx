@@ -137,7 +137,7 @@ function LoginPage() {
       </div>
 
       <div className='Links'>
-        <a href=''>Forgot Password?</a>
+        <Link to="/ForgotPassword">Forgot Password?</Link>
         <Link to="/NewAccount">Make an account?</Link>
       </div>
 
@@ -148,10 +148,11 @@ function LoginPage() {
     </div>
   
   </div>
-  )}
-  //
+  )
+}
+//
 
-// TBA The Registration Page
+// The Account Creation Page
 function NewAccount() {
   // This is needed for redirecting through router
   const navigate = useNavigate();
@@ -161,28 +162,56 @@ function NewAccount() {
     const Username = document.getElementById('NewUser').value
     const Password = document.getElementById('NewPass').value
     
-    const response = await fetch("http://127.0.0.1:5000/login", {
+    const StatusDiv = document.getElementsByClassName("StatusBar")[0]
+    const StatusMsg = document.getElementById("StatusText")
+    
+    const response = await fetch("http://127.0.0.1:5000/create", {
       method: 'POST',  // Allows flask to recieve data from the request //
       headers : {
         "Content-Type": "application/json"  // Tells the server that its recieving JSON data //
       },
-      body: JSON.stringify({Username, Password})  // Converts { } to JSON formatting
+      body: JSON.stringify({username:Username, password:Password})  // Converts { } to JSON formatting
     })
 
+    
     const result = await response.json()
     console.log(result.Status)
+    
+    const message = result.Message
+    console.log(message)
 
-    navigate("/Home", {replace: true})
+    if (result.Status === true) {
+      StatusMsg.innerHTML = message
+      StatusDiv.classList.add("visible")
+      StatusMsg.classList.add("visible")
+      StatusDiv.style.color = "rgba(92, 182, 70, 1)"
+      await delay(5000)
+      navigate("/", {replace: true})
+    } else {
+      StatusMsg.innerHTML = message
+      StatusDiv.style.color = "rgba(253, 99, 99, 1)"
+      console.log(result.Status)
+    }
+    
+    StatusDiv.classList.add("visible")
+    StatusMsg.classList.add("visible")
+
+    await delay(1000)
+
+    StatusDiv.classList.remove("visible")
+    StatusMsg.classList.remove("visible")
   }
   
-
+  function Return() {
+    navigate("/", {replace: true})
+  }
   // Webpage for Sign Up
   return (
     <div className="SignUpWrapper">
       <div className="SignUp">
         
         <div className="NewUserInput">
-          <h1>Username:</h1>
+          <h1 className="NewTitle">Username:</h1>
           <input type="text" id='NewUser'></input>
         </div>
 
@@ -195,12 +224,27 @@ function NewAccount() {
           <button onClick={CreateButtonClicked} className="CreateButton">Create Account!</button>
         </div>
 
+        <div className="ReturnDiv">
+          <button className="ReturnButton" onClick={Return}>Return!</button>
+        </div>
+
+        <div className="StatusBar">
+          <h1 id='StatusText' className="StatusText">Status!</h1>
+        </div>
 
       </div>
     </div>
   )
   //
-}
+  }
+//
+
+// The Forgotten Password Page
+function ForgotPassword() {
+  return (
+    <></>
+  )
+  }
 //
 
 // TBA the home page after login
@@ -230,15 +274,13 @@ function Home() {
 
 // Add routers here "/" is where the page begins
 function App() {
-
   return (
-    <>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/NewAccount" element={<NewAccount />} />
+        <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/Home" element={<Home />} />
       </Routes>
-    </>
   )
 }
 //
