@@ -1,21 +1,31 @@
 import sqlite3
+import bcrypt
 
 
 def Login(username, password):
     connection = sqlite3.connect("Data.db")
     cursor = connection.cursor()
-    data = cursor.execute("SELECT user,pass FROM data WHERE user=? AND pass=?", (username, password))
-    if data.fetchone():
-        return True
-    else:
+
+    data = cursor.execute("SELECT user,pass FROM data WHERE user=?", (username,)).fetchone()
+
+    if not data:
+        print("Invalid Username")
         return False
+    else:
+        EncryptedPass = data[1]
+        EncodedPass = password.encode("UTF-8")
+        return bcrypt.checkpw(EncodedPass, EncryptedPass)
 
 
 def Create(username, password):
     connection = sqlite3.connect('Data.db')
     cursor = connection.cursor()
+
     if Check(username):  # User doesn't exist = True #
         if len(username ) > 3 and len(password) > 3:
+            salt = bcrypt.gensalt()
+            password = bcrypt.hashpw(bytes(password.encode('UTF-8')), salt)
+            
             cursor.execute("INSERT INTO data (user , pass) VALUES (? , ?)", (username, password))
             connection.commit()
             return True, "Account Successfully Created"

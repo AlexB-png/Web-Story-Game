@@ -13,6 +13,7 @@ def home():
     username = data.get('username')
     password = data.get('password')
     Request = bool(Login(username, password))
+    print(Request)
     return jsonify({"message": Request})
 
 
