@@ -21,6 +21,8 @@ body {
 // ROUTERS
 
 // Router "/"
+
+// Router for "/"
 .LoginWrapper {
     height: 100vh;
     display: flex;
@@ -130,7 +132,7 @@ body {
         
         // After "login!" button is pressed
         .Status.visible {
-            max-height: 3vh;  // its a height for the transition //
+            max-height: 4vh;  // its a height for the transition //
         }
     }
 }
@@ -267,7 +269,7 @@ body {
         
         background-color: rgba(0, 0, 0, 0.100);
         width: 35vw;
-        height: 55vh;
+        height: 75vh;
         padding: 5vw;
 
         .ForgotContent {
@@ -279,7 +281,7 @@ body {
             gap: 5vw;
             
 
-            .ForgotUser, .ForgotPass {
+            .ForgotUser, .ForgotPass, .ForgotCode {
                 display: flex;
                 flex-direction: row;
                 height: 5vh;
@@ -287,7 +289,7 @@ body {
                 gap:3vh;
 
                 h1 {
-                    width: 25vw;
+                    width: 15vw;
                 }
 
                 input {
@@ -325,12 +327,14 @@ body {
             }
             
             .ForgotStatus {
+                margin-top: -3vw;
                 max-height: 0vh;
                 transition: max-height 0.2s ease-in-out;
 
                 .ForgotStatusMessage {
                     opacity: 0;
                     transition: opacity 0.2s ease-in-out;
+                    font-size: clamp(1rem,2vw,3vw);
                 }
 
                 .ForgotStatusMessage.visible {

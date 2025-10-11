@@ -10,8 +10,11 @@ cursor = connection.cursor()
 ##
 
 # Make Table #
-cursor.execute("CREATE TABLE data(user, pass)")
+#cursor.execute("CREATE TABLE users(user, pass)")
 ##
+
+# When i want to add a column #
+cursor.execute("ALTER TABLE users ADD COLUMN secret_code TEXT")
 
 # Add data to sql file #
 connection.commit()
