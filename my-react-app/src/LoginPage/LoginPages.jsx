@@ -1,11 +1,6 @@
 // Imports
 import {useNavigate, Link} from "react-router-dom";
-import '../App.scss'
-//
-
-// Variables for preventing URL manipulation
-var LoginStatus = false  // Changes if the login was successful //
-// 
+import './LoginPages.scss'
 
 // Runs when a delay is needed
 function delay(miliseconds) {
@@ -15,103 +10,100 @@ function delay(miliseconds) {
 
 // LOGIN PAGE //
 // Put Route Pages Here
-export function LoginPage() {
+export function LoginPage({LoginStatus, setLoginStatus}) {
     // This is needed for redirecting through router
     const navigate = useNavigate();
     //
 
     // This runs when login button is pressed
     async function NewPageRequest() {
-    // Get data from the text input boxes
-    const username = document.getElementById('UsernameInput').value
-    const password = document.getElementById('PasswordInput').value
-    //
+        // Get data from the text input boxes
+        const username = document.getElementById('UsernameInput').value
+        const password = document.getElementById('PasswordInput').value
+        //
 
-    // Fetch data from the flask app (sends variables username and password)
-    const response = await fetch("http://127.0.0.1:5000/login", {
-        method: 'POST',  // Allows flask to recieve data from the request //
-        headers : {
-        "Content-Type": "application/json"  // Tells the server that its recieving JSON data //
-        },
-        body: JSON.stringify({'username':username, 'password':password})  // Converts { } to JSON formatting
-    })
-    //
+        // Fetch data from the flask app (sends variables username and password)
+        const response = await fetch("http://127.0.0.1:5000/login", {
+            method: 'POST',  // Allows flask to recieve data from the request //
+            headers : {
+            "Content-Type": "application/json"  // Tells the server that its recieving JSON data //
+            },
+            body: JSON.stringify({'username':username, 'password':password})  // Converts { } to JSON formatting
+        })
+        //
 
-    const result = await response.json()  // Converts response data to a json without the headers//
-    
-    // Bad input returns False, Correct input return True
-    console.log(result)
-    //
+        const result = await response.json()  // Converts response data to a json without the headers//
+        
+        // Bad input returns False, Correct input return True
+        //console.log(result)
+        //
 
-    // Debugging
-    console.log(result.message)
-    //
-    
-    // If result.message == True (Boolean)
-    if (result.message) {
-        LoginStatus = true
-        SuccessRequest()
-        await delay(2000)
-        navigate("/Home", {replace: true})  // Send user to main page //
-    //
-    } else {  // If result.message is not True (Boolean)
-        console.log('Failed')
-        if (!LoginStatus){
-        FailedRequest()
-        }
-    }  //
+        // Debugging
+        //console.log(result.message)
+        //
+        
+        // If result.message == True (Boolean)
+        if (result.message) {
+            SuccessRequest()
+            await delay(2000)
+            setLoginStatus(true)
+            navigate("/Home")  // Send user to main page //
+        //
+        } else {  // If result.message is not True (Boolean)
+            FailedRequest()
+        }  //
     }
     //
     
     // Successful login
     function SuccessRequest() {
-    // Gets the text thats going to change
-    const SuccessDiv = document.getElementById('StatusDiv')
-    const SuccessText = document.getElementById('StatusMessage')
-    SuccessText.classList.toggle('visible')
-    SuccessDiv.classList.toggle('visible')
-    //
+        // Gets the text thats going to change
+        const SuccessDiv = document.getElementById('StatusDiv')
+        const SuccessText = document.getElementById('StatusMessage')
+        SuccessText.classList.toggle('visible')
+        SuccessDiv.classList.toggle('visible')
+        //
 
-    // Changes said text 
-    SuccessText.innerHTML = 'Success! Redirecting...'
-    //
+        // Changes said text 
+        SuccessText.innerHTML = 'Success! Redirecting...'
+        //
 
-    // Display text and change color
-    SuccessText.style.display = 'block'
-    SuccessText.style.color = "rgba(126, 245, 195, 1)"
+        // Display text and change color
+        SuccessText.style.display = 'block'
+        SuccessText.style.color = "rgba(126, 245, 195, 1)"
     }
     //
     //
 
     // Failed Login
     async function FailedRequest() {
-    // Gets the text thats going to change
-    const FailedDiv = document.getElementById('StatusDiv')
-    const FailedText = document.getElementById('StatusMessage')
-    
-    FailedDiv.classList.add('visible')
-    FailedText.classList.add('visible')
-    //
-    
-    // Changes said text 
-    FailedText.innerHTML = 'Incorrect Username Or Password'
-    //
-    
-    // Display text and change color
-    FailedText.style.display = 'block'
-    FailedText.style.color = "rgba(189, 99, 99, 1)";
-    //
+        // Gets the text thats going to change
+        const FailedDiv = document.getElementById('StatusDiv')
+        const FailedText = document.getElementById('StatusMessage')
+        
+        FailedDiv.classList.add('visible')
+        FailedText.classList.add('visible')
+        //
+        
+        // Changes said text 
+        FailedText.innerHTML = 'Incorrect Username Or Password'
+        //
+        
+        // Display text and change color
+        FailedText.style.display = 'block'
+        FailedText.style.color = "rgba(189, 99, 99, 1)";
+        //
 
-    // Wait 2 seconds
-    await delay(2000)
-    //
-    
-    // If logged in (True) DO NOT hide the text
-    if (!LoginStatus){
-        FailedText.classList.remove('visible')
-        FailedDiv.classList.remove('visible')
-    }
-    //
+        // Wait 2 seconds
+        await delay(2000)
+        //
+        
+        // If logged in (True) DO NOT hide the text
+        if (!LoginStatus){
+            FailedText.classList.remove('visible')
+            FailedDiv.classList.remove('visible')
+        }
+        //
     }
     //
 
@@ -158,52 +150,53 @@ export function NewAccount() {
     //
 
     async function CreateButtonClicked() {
-    const Username = document.getElementById('NewUser').value
-    const Password = document.getElementById('NewPass').value
-    
-    const StatusDiv = document.getElementsByClassName("StatusBar")[0]
-    const StatusMsg = document.getElementById("StatusText")
-    
-    const response = await fetch("http://127.0.0.1:5000/create", {
-        method: 'POST',  // Allows flask to recieve data from the request //
-        headers : {
-        "Content-Type": "application/json"  // Tells the server that its recieving JSON data //
-        },
-        body: JSON.stringify({username:Username, password:Password})  // Converts { } to JSON formatting
-    })
+        const Username = document.getElementById('NewUser').value
+        const Password = document.getElementById('NewPass').value
+        
+        const StatusDiv = document.getElementsByClassName("StatusBar")[0]
+        const StatusMsg = document.getElementById("StatusText")
+        
+        const response = await fetch("http://127.0.0.1:5000/create", {
+            method: 'POST',  // Allows flask to recieve data from the request //
+            headers : {
+            "Content-Type": "application/json"  // Tells the server that its recieving JSON data //
+            },
+            body: JSON.stringify({username:Username, password:Password})  // Converts { } to JSON formatting
+        })
 
-    
-    const result = await response.json()
-    console.log(result.Status)
-    
-    const message = result.Message
-    console.log(message)
+        
+        const result = await response.json()
+        console.log(result.Status)
+        
+        const message = result.Message
+        console.log(message)
 
-    if (result.Status === true) {
-        StatusMsg.innerHTML = message
+        if (result.Status === true) {
+            StatusMsg.innerHTML = message
+            StatusDiv.classList.add("visible")
+            StatusMsg.classList.add("visible")
+            StatusDiv.style.color = "rgba(92, 182, 70, 1)"
+            await delay(5000)
+            navigate("/", {replace: true})
+        } else {
+            StatusMsg.innerHTML = message
+            StatusDiv.style.color = "rgba(253, 99, 99, 1)"
+            console.log(result.Status)
+        }
+        
         StatusDiv.classList.add("visible")
         StatusMsg.classList.add("visible")
-        StatusDiv.style.color = "rgba(92, 182, 70, 1)"
-        await delay(5000)
-        navigate("/", {replace: true})
-    } else {
-        StatusMsg.innerHTML = message
-        StatusDiv.style.color = "rgba(253, 99, 99, 1)"
-        console.log(result.Status)
-    }
-    
-    StatusDiv.classList.add("visible")
-    StatusMsg.classList.add("visible")
 
-    await delay(1000)
+        await delay(1000)
 
-    StatusDiv.classList.remove("visible")
-    StatusMsg.classList.remove("visible")
+        StatusDiv.classList.remove("visible")
+        StatusMsg.classList.remove("visible")
     }
     
     function Return() {
     navigate("/", {replace: true})
     }
+    
     // Webpage for Sign Up
     return (
     <div className="SignUpWrapper">
@@ -243,46 +236,46 @@ export function ForgotPassword() {
     const navigate = useNavigate();
 
     function redirect() {
-    navigate("/", {replace: true})}
+        navigate("/", {replace: true})}
 
     async function OnClick() {
-    const StatusDiv = document.getElementById("ForgotStatus")
-    const StatusMessage = document.getElementById("ForgotStatusMessage")
+        const StatusDiv = document.getElementById("ForgotStatus")
+        const StatusMessage = document.getElementById("ForgotStatusMessage")
 
-    const Username = document.getElementById("Username").value
-    const Password = document.getElementById("Password").value
-    const Code = document.getElementById("Code").value
+        const Username = document.getElementById("Username").value
+        const Password = document.getElementById("Password").value
+        const Code = document.getElementById("Code").value
 
-    const response = await fetch("http://127.0.0.1:5000/change", {
-        method: 'POST',  // Allows flask to recieve data from the request //
-        headers : {
-        "Content-Type": "application/json"  // Tells the server that its recieving JSON data //
-        },
-        body: JSON.stringify({username:Username, password:Password, code:Code})  // Converts { } to JSON formatting
-    })
+        const response = await fetch("http://127.0.0.1:5000/change", {
+            method: 'POST',  // Allows flask to recieve data from the request //
+            headers : {
+            "Content-Type": "application/json"  // Tells the server that its recieving JSON data //
+            },
+            body: JSON.stringify({username:Username, password:Password, code:Code})  // Converts { } to JSON formatting
+        })
 
-    const result = await response.json()
-    console.log(result.Status)
-    console.log(result.Message)
+        const result = await response.json()
+        console.log(result.Status)
+        console.log(result.Message)
 
-    async function ButtonPress(redirect) {
-        StatusDiv.classList.add("visible")
-        StatusMessage.classList.add("visible")
-        StatusMessage.innerHTML = result.Message
-        await delay(1000)
-        StatusDiv.classList.remove("visible")
-        StatusMessage.classList.remove("visible")
+        async function ButtonPress(redirect) {
+            StatusDiv.classList.add("visible")
+            StatusMessage.classList.add("visible")
+            StatusMessage.innerHTML = result.Message
+            await delay(1000)
+            StatusDiv.classList.remove("visible")
+            StatusMessage.classList.remove("visible")
 
-        if (redirect == true) {
-        redirect()
+            if (redirect == true) {
+                redirect()
+            }
         }
-    }
 
-    if (result.Status == true) {
-        ButtonPress(true)
-    } else {
-        ButtonPress(false)
-    }
+        if (result.Status == true) {
+            ButtonPress(true)
+        } else {
+            ButtonPress(false)
+        }
     }
     
     return (
