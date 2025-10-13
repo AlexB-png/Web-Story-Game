@@ -153,9 +153,10 @@ export function NewAccount() {
     const navigate = useNavigate();
     //
 
-    async function CreateButtonClicked() {
+    async function ButtonClicked() {
         const Username = document.getElementById('NewUser').value
         const Password = document.getElementById('NewPass').value
+        // Password.value = ""
 
         const StatusDiv = document.getElementsByClassName("StatusBar")[0]
         const StatusMsg = document.getElementById("StatusText")
@@ -217,7 +218,7 @@ export function NewAccount() {
                 </div>
 
                 <div className="CreateNewButton">
-                    <button onClick={CreateButtonClicked} className="CreateButton">Create Account!</button>
+                    <button onClick={ButtonClicked} className="CreateButton">Create Account!</button>
                 </div>
 
                 <div className="ReturnDiv">

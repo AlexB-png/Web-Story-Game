@@ -2,7 +2,7 @@
 from flask import Flask, request, jsonify  # type: ignore
 import sqlite3
 from flask_cors import CORS  # type: ignore
-from Functions import Login, Create, Change
+from Functions import Login, Create, Change, init_db
 
 app = Flask(__name__)
 CORS(app)
@@ -43,11 +43,6 @@ def change():
 
 
 if __name__ == '__main__':
-    connection = sqlite3.connect(r"Data.db")
-    cursor = connection.cursor()
-    try: 
-        cursor.execute("SELECT * from users")
-    except:
-        print("failed To connect to database")
-        cursor.execute("CREATE TABLE users(user, pass, secret_code)")
+    init_db()
+    
     app.run(debug=True)

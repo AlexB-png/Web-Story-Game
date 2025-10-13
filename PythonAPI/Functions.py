@@ -46,7 +46,7 @@ def CheckNotUser(username):
         cursor = connection.cursor()
         data = cursor.execute("SELECT user FROM users WHERE user=?", (username,))
         x = data.fetchone()
-        return x is None  # If user exists return False #
+    return x is None  # If user exists return False #
 
 
 def CheckSecretCode(user, code):
@@ -90,9 +90,18 @@ def test():
     user = input("Username: ")
     password = input("Password: ")
     code = input("Code: ")
-    ##
+    Create(user, password)
 
 
+def init_db():
+    connection = sqlite3.connect(r"Data.db")
+    cursor = connection.cursor()
+    try: 
+        cursor.execute("SELECT * from users")
+    except:
+        print("failed To connect to database")
+        cursor.execute("CREATE TABLE users(user, pass, secret_code)")
+    connection.close()
 
 
 if __name__ == '__main__':
