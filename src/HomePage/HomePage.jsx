@@ -5,38 +5,35 @@ import './HomePage.scss'
 export function Home({ LoginStatus }) {
   const navigate = useNavigate();
 
-  const [playerLocation, setPlayerLocation] = useState("A3")
-
-  const nodesHeight = {
-    1: ["Down"],
-    2: ["Up", "Down"],
-    3: ["Up", "Down"],
-    4: ["Up", "Down"],
-    5: ["Up"]
-  }
+  const [playerLocation, setPlayerLocation] = useState("A4")
 
   const connections = {
-    "A3": ["B2", "B4"],
-    "B2": ["C1", "C3"],
-    "B4": ["C5", "C3"],
-    "C1": ["D2"],
-    "C3": ["D2", "D4"],
-    "C5": ["D4"],
-    "D2": ["E1", "E3"],
-    "D4": ["E3", "E5"],
-    "E1": ["F2"],
-    "E3": ["F2", "F4"],
-    "E5": ["F1"],
-    "F2": ["G1", "G3"],
-    "F4": ["G3", "G5"],
-    "G1": ["H2"],
-    "G3": ["H2", "H4"],
-    "G5": ["H4"],
-    "H2": ["BOSS"],
-    "H4": ["BOSS"]
-  }
+    "A4": ["B3", "B5"],
+    "B3": ["C2", "C4"],
+    "B5": ["C4", "C6"],
+    "C2": ["D1", "D3"],
+    "C6": ["D5", "D7"],
+    "D1": ["", "E2"],
+    "D3": ["E2", "E4"],
+    "D5": ["E4", "E6"],
+    "D7": ["E6", ""],
+    "E2": ["F1", "F3"],
+    "E4": ["F3", "F5"],
+    "E6": ["F5", "F7"],
+    "F1": ["", "G2"],
+    "F5": ["G4", "G6"],
+    "F7": ["G6", ""],
+    "G2": ["", "H3"],
+    "G4": ["H3","H5"],
+    "G6": ["H5", ""],
+    "H3": ["" , "B0SS"],
+    "H5": ["B0SS", ""],
+    "B0SS": ["", ""],
 
-  const dangerous = ["C1", "C5", "E1", "E5", "G1", "G5"]
+    // Black Holes
+    "C4": ["", ""],
+    "F3": ["", ""]
+  }
 
   useEffect(() => {
     if (LoginStatus === false) {
@@ -48,29 +45,30 @@ export function Home({ LoginStatus }) {
 
   useEffect(() => {
     var pos = playerLocation
-    var column = parseInt(pos[1])
-    var directions = nodesHeight[column]
+    var conns = connections[pos]
 
     var upButton = document.getElementById("UpButton")
     var downButton = document.getElementById("DownButton")
 
-    console.log(directions)
-
-    if (directions.includes("Up")) {
+    if (conns[0] != "") {
       upButton.classList.add("Block")
     } else {
+      upButton.classList.remove("Block")
       console.log("Up Button Not Shown")
     }
 
-    if (directions.includes("Down")) {
+    if (conns[1] != "") {
       downButton.classList.add("Block")
     } else {
+      downButton.classList.remove("Block")
       console.log("Down not shown")
     }
   }, [playerLocation])
 
-  function UpButtonPress() {
-    console.log("Up Button Pressed")
+  function UpButtonPress(index) {
+    var currentLocation = playerLocation
+    var newLocation = connections[currentLocation][index]
+    setPlayerLocation(newLocation)
   }
 
   return (
@@ -79,9 +77,9 @@ export function Home({ LoginStatus }) {
         <div className='DirectionButtons'>
           <h1>Current Position is {playerLocation}</h1>
           
-          <button id='UpButton' className="DirectionButton">Move Upwards</button>
+          <button id='UpButton' className="DirectionButton" onClick={() => UpButtonPress(0)}>Move Upwards</button>
 
-          <button id='DownButton' className='DirectionButton'>Move Downwards</button>
+          <button id='DownButton' className='DirectionButton' onClick={() => UpButtonPress(1)}>Move Downwards</button>
         </div>
       </div>
     </>
