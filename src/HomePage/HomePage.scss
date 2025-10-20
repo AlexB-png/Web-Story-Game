@@ -1,0 +1,26 @@
+.Content {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  gap: 10vh;
+
+  .DirectionButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+
+    .DirectionButton {
+      display: none;
+
+      &.Block {
+        display: block;
+        width: 20vw;
+        height: 10vh;
+        font-size: 2vw;
+        color: black;
+      }
+    }
+  }
+}
