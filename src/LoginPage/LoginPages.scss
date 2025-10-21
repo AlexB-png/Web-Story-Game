@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Share+Tech+Mono&display=swap');
+// Pixelify Sans // 
 
 // Applies pixel text to all text
+
+// Pick which one you want :) //
 * {
-    font-family: "Pixelify Sans", sans-serif;
-    font-weight: 500;
+    //font-family: "Pixelify Sans";
+    //font-family: "Bitcount Grid Single", "Pixelify Sans";
+    font-family: "Share Tech Mono","Bitcount Grid Single", "Pixelify Sans";
+    font-weight: 400;
 }
 //
 

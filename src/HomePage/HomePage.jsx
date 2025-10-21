@@ -3,36 +3,29 @@ import { useNavigate, Link } from "react-router-dom";
 import './HomePage.scss'
 
 export function Home({ LoginStatus }) {
+  class Easy {
+    constructor() {
+      this.Height = 5
+      this.FinalChar = 'K'  // 10 Width
+    }
+  }
+
   const navigate = useNavigate();
 
-  const [playerLocation, setPlayerLocation] = useState("A4")
+  const [playerLocation, setPlayerLocation] = useState("A1")
 
-  const connections = {
-    "A4": ["B3", "B5"],
-    "B3": ["C2", "C4"],
-    "B5": ["C4", "C6"],
-    "C2": ["D1", "D3"],
-    "C6": ["D5", "D7"],
-    "D1": ["", "E2"],
-    "D3": ["E2", "E4"],
-    "D5": ["E4", "E6"],
-    "D7": ["E6", ""],
-    "E2": ["F1", "F3"],
-    "E4": ["F3", "F5"],
-    "E6": ["F5", "F7"],
-    "F1": ["", "G2"],
-    "F5": ["G4", "G6"],
-    "F7": ["G6", ""],
-    "G2": ["", "H3"],
-    "G4": ["H3","H5"],
-    "G6": ["H5", ""],
-    "H3": ["" , "B0SS"],
-    "H5": ["B0SS", ""],
-    "B0SS": ["", ""],
+  const MaxRows = 9 // set to a multiple of 2x+1
+  const FinalColumn = '[' // Remember: This character is NOT included USE "[" if you want Z
 
-    // Black Holes
-    "C4": ["", ""],
-    "F3": ["", ""]
+  function NextCharacter(character) {
+    var code = character.charCodeAt(0)
+    code += 1
+
+    if (String.fromCharCode(code) == FinalColumn) {
+      return 0
+    } else {
+      return String.fromCharCode(code)
+    }
   }
 
   useEffect(() => {
@@ -43,32 +36,54 @@ export function Home({ LoginStatus }) {
     }
   })
 
-  useEffect(() => {
-    var pos = playerLocation
-    var conns = connections[pos]
 
+
+  useEffect(() => {
     var upButton = document.getElementById("UpButton")
     var downButton = document.getElementById("DownButton")
 
-    if (conns[0] != "") {
-      upButton.classList.add("Block")
-    } else {
-      upButton.classList.remove("Block")
+    var RowNum = playerLocation[1]
+
+    if (RowNum == 1) {
       console.log("Up Button Not Shown")
+      upButton.disabled = true
+    } else {
+      upButton.disabled = false
     }
 
-    if (conns[1] != "") {
-      downButton.classList.add("Block")
+    if (RowNum == MaxRows) {
+      console.log("Down Button Not Shown")
+      downButton.disabled = true
     } else {
-      downButton.classList.remove("Block")
-      console.log("Down not shown")
+      downButton.disabled = false
+    }
+
+    if (NextCharacter(playerLocation[0]) == 0) {
+      downButton.disabled = true
+      upButton.disabled = true
     }
   }, [playerLocation])
 
-  function UpButtonPress(index) {
-    var currentLocation = playerLocation
-    var newLocation = connections[currentLocation][index]
-    setPlayerLocation(newLocation)
+  function NextPlayerPos(Direction) {
+    var NextLetter = NextCharacter(playerLocation[0])
+
+    var CurrentNumber = parseInt(playerLocation[1])
+
+    var NextNumberUp = CurrentNumber - 2
+    var NextNumberDown = CurrentNumber + 2
+
+    if (Direction == "up") {
+      var NextPos = NextLetter + NextNumberUp
+    } else {
+      var NextPos = NextLetter + NextNumberDown
+    }
+
+    if (NextCharacter(playerLocation[0]) == FinalColumn) {
+      downButton.disabled = true
+      upButton.disabled = true
+    }
+
+    setPlayerLocation(NextPos)
   }
 
   return (
@@ -76,10 +91,10 @@ export function Home({ LoginStatus }) {
       <div className='Content'>
         <div className='DirectionButtons'>
           <h1>Current Position is {playerLocation}</h1>
-          
-          <button id='UpButton' className="DirectionButton" onClick={() => UpButtonPress(0)}>Move Upwards</button>
 
-          <button id='DownButton' className='DirectionButton' onClick={() => UpButtonPress(1)}>Move Downwards</button>
+          <button id='UpButton' className="DirectionButton" onClick={() => NextPlayerPos('up')}>Move Upwards</button>
+
+          <button id='DownButton' className='DirectionButton' onClick={() => NextPlayerPos('down')}>Move Downwards</button>
         </div>
       </div>
     </>

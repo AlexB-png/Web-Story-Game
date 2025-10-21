@@ -34,7 +34,7 @@ def change():
 
     username = data.get('username')
     password = data.get('password')
-    code = data.get('code')
+    code = int(data.get('code'))
 
     status, message = Change(username, password, code)
     print(status)

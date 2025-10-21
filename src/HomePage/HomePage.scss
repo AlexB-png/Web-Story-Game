@@ -12,15 +12,11 @@
     gap: 5vh;
 
     .DirectionButton {
-      display: none;
-
-      &.Block {
-        display: block;
-        width: 20vw;
-        height: 10vh;
-        font-size: 2vw;
-        color: black;
-      }
+      display: block;
+      width: 20vw;
+      height: 10vh;
+      font-size: 2vw;
+      color: black;
     }
   }
 }

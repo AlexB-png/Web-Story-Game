@@ -106,4 +106,5 @@ def init_db():
 
 if __name__ == '__main__':
     # THIS IS STRICTLY FOR TESTING PURPOSES #
-    test()
+    x = Change("TEST3","123", 6804207484)
+    print(x)
