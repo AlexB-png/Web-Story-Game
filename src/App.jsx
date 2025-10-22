@@ -2,7 +2,7 @@
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { LoginPage, NewAccount, ForgotPassword } from './LoginPage/LoginPages'
-import { Home } from './HomePage/HomePage'
+import { Game } from './HomePage/HomePage'
 //
 
 
@@ -24,7 +24,7 @@ function App() {
             <Route path="/" element={<LoginPage LoginStatus={LoginStatus} setLoginStatus={setLoginStatus} />} />
             <Route path="/NewAccount" element={<NewAccount />} />
             <Route path="/ForgotPassword" element={<ForgotPassword />} />
-            <Route path="/Home" element={<Home LoginStatus={LoginStatus} />} />
+            <Route path="/Home" element={<Game LoginStatus={LoginStatus} />} />
         </Routes>
     )
 }

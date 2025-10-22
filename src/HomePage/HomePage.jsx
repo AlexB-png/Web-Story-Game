@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import './HomePage.scss'
 
-export function Home({ LoginStatus }) {
+function Home({ LoginStatus, playerLocation, setPlayerLocation }) {
   class Easy {
     constructor() {
       this.Height = 5
@@ -12,7 +12,7 @@ export function Home({ LoginStatus }) {
 
   const navigate = useNavigate();
 
-  const [playerLocation, setPlayerLocation] = useState("A1")
+
 
   const MaxRows = 9 // set to a multiple of 2x+1
   const FinalColumn = '[' // Remember: This character is NOT included USE "[" if you want Z
@@ -29,10 +29,12 @@ export function Home({ LoginStatus }) {
   }
 
   useEffect(() => {
-    if (LoginStatus === false) {
+    if (LoginStatus.LoginStatus === false) {
+      console.log("Go Back To Root")
       navigate("/")
     } else {
       console.log("Thanks For Logging In")
+      console.log(typeof LoginStatus)
     }
   })
 
@@ -99,4 +101,29 @@ export function Home({ LoginStatus }) {
       </div>
     </>
   )
+}
+
+function Event( {setRenderPage} ) {
+  return (
+    <>
+      <div>
+        <h1>This is the game event</h1>
+
+        <button onClick={() => setRenderPage("Move")}></button>
+      </div>
+    </>
+  )
+}
+
+export function Game(LoginStatus) {
+  const [playerLocation, setPlayerLocation] = useState("A1")
+  const [renderPage, setRenderPage] = useState("Event")
+
+  switch (renderPage) {
+    case "Move":
+      return <Home LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} />
+    case "Event":
+      return <Event setRenderPage = {setRenderPage}/>
+  }
+
 }
