@@ -55,8 +55,16 @@
 }
 
 .TopBar {
-  width: 2vw;
+  width: 100vw;
+  height: clamp(35px, 10vh, 55px);
+  background-color: rgba(232, 255, 255, 0.171);
   position: fixed;
   display: flex;
+
+  justify-content: center;
+  align-items: center;
+
   flex-direction: row;
+
+  font-size: clamp(15px, 5vh, 25px);
 }

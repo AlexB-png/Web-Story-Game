@@ -47,7 +47,7 @@ export function LoginPage({ LoginStatus, setLoginStatus }) {
             SuccessRequest()
             await delay(2000)
             setLoginStatus(true)
-            navigate("/Home")  // Send user to main page //
+            navigate("/Play")  // Send user to main page //
             //
         } else {  // If result.message is not True (Boolean)
             FailedRequest()

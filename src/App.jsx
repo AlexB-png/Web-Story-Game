@@ -24,7 +24,7 @@ function App() {
       <Route path="/" element={<LoginPage LoginStatus={LoginStatus} setLoginStatus={setLoginStatus} />} />
       <Route path="/NewAccount" element={<NewAccount />} />
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
-      <Route path="/Home" element={<Game LoginStatus={LoginStatus} />} />
+      <Route path="/Play" element={<Game LoginStatus={LoginStatus} />} />
       <Route path="/Game" element={<GamePage LoginStatus={LoginStatus} />} />
       <Route path="/HowToPlay" element={< HowToPlay />} />
     </Routes>
