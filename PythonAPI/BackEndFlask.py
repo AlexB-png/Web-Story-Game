@@ -1,6 +1,5 @@
 # I added ignores since i used a venv #
 from flask import Flask, request, jsonify  # type: ignore
-import sqlite3
 from flask_cors import CORS  # type: ignore
 from Functions import Login, Create, Change, init_db
 
@@ -44,5 +43,5 @@ def change():
 
 if __name__ == '__main__':
     init_db()
-    
+
     app.run(debug=True)

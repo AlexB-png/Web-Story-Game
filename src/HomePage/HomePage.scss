@@ -1,3 +1,22 @@
+.PlayPageContent {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+  gap:10vh ;
+
+  button {
+    width: 20vw;
+    height: clamp(75px, 10vh, 120px);
+    border-radius: 10px;
+    font-size: 2vw;
+    background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+    border-color: rgb(164, 202, 247);
+  }
+}
+
 .Content {
   display: flex;
   flex-direction: column;
@@ -26,4 +45,18 @@
   height: 100vh;
   justify-content: center;
   align-items: center;
+}
+
+.Instructions {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.TopBar {
+  width: 2vw;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
 }

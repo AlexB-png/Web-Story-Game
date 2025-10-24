@@ -1,6 +1,31 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, redirect } from "react-router-dom";
 import './HomePage.scss'
+
+
+
+export function GamePage(LoginStatus) {
+  const [playerLocation, setPlayerLocation] = useState("A1")
+  const [renderPage, setRenderPage] = useState("Move")
+
+  switch (renderPage) {
+    case "Move":
+      return <Home LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} />
+    case "Event":
+      return <Event LoginStatus={LoginStatus} setRenderPage={setRenderPage} />
+  }
+
+}
+
+export function HowToPlay() {
+  return (
+    <>
+      <div className='Instructions'>
+        <h1>You can't win!</h1>
+      </div>
+    </>
+  )
+}
 
 function Home({ LoginStatus, playerLocation, setPlayerLocation }) {
   class Easy {
@@ -90,6 +115,9 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation }) {
 
   return (
     <>
+      <div className='TopBar'>
+        <h1>Test</h1>
+      </div>
       <div className='Content'>
         <div className='DirectionButtons'>
           <h1>Current Position is {playerLocation}</h1>
@@ -103,7 +131,7 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation }) {
   )
 }
 
-function Event( {setRenderPage} ) {
+function Event({ setRenderPage }) {
   return (
     <>
       <div>
@@ -115,15 +143,16 @@ function Event( {setRenderPage} ) {
   )
 }
 
-export function Game(LoginStatus) {
-  const [playerLocation, setPlayerLocation] = useState("A1")
-  const [renderPage, setRenderPage] = useState("Event")
+export function Game() {
+  const navigate = useNavigate();
 
-  switch (renderPage) {
-    case "Move":
-      return <Home LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} />
-    case "Event":
-      return <Event setRenderPage = {setRenderPage}/>
-  }
+  return (
+    <>
+      <div className='PlayPageContent'>
+        <button onClick={() => navigate("/Game")}>Play!</button>
 
+        <button onClick={() => window.open(`${window.location.origin}/HowToPlay`, "_blank", "noopener,noreferrer")}>How To Play?</button>
+      </div>
+    </>
+  )
 }
