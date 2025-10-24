@@ -26,3 +26,4 @@ dist-ssr
 # Environment #
 venv/
 Data.db
+PythonAPI\__pycache__
