@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link, redirect } from "react-router-dom";
 import './HomePage.scss'
+import eventsData from './Events.json';
 
 // Difficulty Classes //
 class Easy {
@@ -47,7 +48,7 @@ export function GamePage(LoginStatus) {
     case "Move":
       return <Home LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} setRenderPage={setRenderPage} renderPage = {renderPage}/>
     case "Event":
-      return <Event LoginStatus={LoginStatus} setRenderPage={setRenderPage} />
+      return <Event LoginStatus={LoginStatus} setRenderPage={setRenderPage} playerLocation={playerLocation}/>
   }
 }
 //
@@ -178,16 +179,37 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, r
 
 
 // This is the redirect after a direction is chosen // Where the events happen //
-function Event({ setRenderPage }) {
+function Event({ setRenderPage , playerLocation }) {
+  const flip = (bool) => !bool
+  
+  const [event, SetEvent] = useState(null)
+
+  useEffect(() => {
+    // https://stackoverflow.com/questions/19589598/how-to-get-random-values-in-json //
+    var random = eventsData.Events[Math.floor(Math.random() * eventsData.Events.length)]
+    //
+
+    SetEvent(random)
+  }, [])
+
+  if (!event) return <h1>Loading...</h1>
+
+  if (event) console.log(event.Description)
+  
   return (
     <>
       <div className='TopBar'>
-        <h1>{"Hello"}</h1>
+        <h1>{event?.name}</h1>
       </div>
-      <div>
-        <h1>This is the game event</h1>
+      <div className='EventContent'>
+        <h1>{event?.Description}</h1>
 
-        <button onClick={() => setRenderPage("Move")}></button>
+        <div className='Square'>
+          <button id='Button1' disabled={flip(event["1"])} onClick={() => setRenderPage("Move")}>EVENT CHOICE 1</button>
+          <button id='Button2' disabled={flip(event["2"])} onClick={() => setRenderPage("Move")}>EVENT CHOICE 2</button>
+          <button id='Button3' disabled={flip(event["3"])} onClick={() => setRenderPage("Move")}>EVENT CHOICE 3</button>
+          <button id='Button4' disabled={flip(event["4"])} onClick={() => setRenderPage("Move")}>EVENT CHOICE 4</button>
+        </div>
       </div>
     </>
   )

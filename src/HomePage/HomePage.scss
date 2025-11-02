@@ -45,6 +45,21 @@
   height: 100vh;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 5vh;
+
+  .Square {
+    display: flex;
+    flex-direction: column;
+    gap: 10vh;
+
+    button {
+      width: 20vw;
+      height: 10vh;
+      background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+      font-size: clamp(20px, 2vh, 2vw);
+    }
+  }
 }
 
 .Instructions {

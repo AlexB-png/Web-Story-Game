@@ -1,0 +1,21 @@
+{
+  "Events": [
+    {
+      "name": "TEST",
+      "Description": "This is a test for the events",
+      "1": true,
+      "2":true,
+      "3":true,
+      "4":false
+    },
+
+    {
+      "name":"TEST2",
+      "Description":"This is a second test for the events",
+      "1": true,
+      "2":true,
+      "3":false,
+      "4":false
+    }
+  ]
+}
