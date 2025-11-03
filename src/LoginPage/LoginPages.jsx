@@ -97,7 +97,7 @@ export function LoginPage({ LoginStatus, setLoginStatus, setUsername }) {
     //
 
     // Wait 2 seconds
-    await delay(2000)
+    await delay(1000)
     //
 
     // If logged in (True) DO NOT hide the text
@@ -377,6 +377,10 @@ export function Settings({username, LoginStatus}) {
 
           <div  className="Delete">
             <button onClick={() => RemoveAccount(username)}>Delete Account!</button>
+          </div>
+
+          <div className="Return">
+            <button onClick={() => navigate("/Play")}>Return!</button>
           </div>
         </div>
       </div>

@@ -434,6 +434,18 @@ body {
         }
       }
 
+      .Return {
+        button {
+          width: 20vw;
+          height: clamp(3rem, 3vh, 5vh);
+          border-radius: 0.5vw;
+          font-size: clamp(1vw,2vh,3vw);
+          background: linear-gradient(245deg, rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+          border-color: rgb(164, 202, 247);
+          height: 5vh;
+        }
+      }
+
     }
   }
 }

@@ -22,8 +22,6 @@ def Create(username, password):
     if CheckNotUser(username):  # User doesn't exist = True #
         print("Succeesed to checknotuser")
         if len(username) > 3 and len(password) > 3:
-            
-            
             salt = bcrypt.gensalt()
             password = bcrypt.hashpw(bytes(password.encode('UTF-8')), salt)
 
@@ -31,7 +29,6 @@ def Create(username, password):
 
             with sqlite3.connect('Data.db') as connection:
                 cursor = connection.cursor()
-                
                 cursor.execute("INSERT INTO users (user , pass, secret_code) VALUES (? , ?, ?)", (username, password, SecretCode))
                 connection.commit()
             return True, "Account Successfully Created"
@@ -82,32 +79,35 @@ def Change(username, password, code):
             return False, "Incorrect Secret Code"
     else:
         return False, "Username doesn't exist"
-    
 
 
 def test():
-  # Variables #
-  user = input("Username: ")
-  password = input("Password: ")
-  code = input("Code: ")
-  Create(user, password)
+    # Variables #
+    user = input("Username: ")
+    password = input("Password: ")
+    code = input("Code: ")
+    Create(user, password)
 
 
 def init_db():
-  connection = sqlite3.connect(r"Data.db")
-  cursor = connection.cursor()
-  try: 
-      cursor.execute("SELECT * from users")
-  except:
-      print("failed To connect to database")
-      cursor.execute("CREATE TABLE users(user, pass, secret_code)")
-  connection.close()
+    connection = sqlite3.connect(r"Data.db")
+    cursor = connection.cursor()
+    try: 
+        cursor.execute("SELECT * from users")
+    except:
+        print("failed To connect to database")
+        cursor.execute("CREATE TABLE users(user, pass, secret_code)")
+    connection.close()
+
 
 def DeleteAccount(username):
-  connection = sqlite3.connect(r"Data.db")
-  cursor = connection.cursor()
+    connection = sqlite3.connect(r"Data.db")
+    cursor = connection.cursor()
+
+    cursor.execute("DELETE FROM users WHERE user = (?)", (username,))
+    connection.commit()
+    return True
+
 
 if __name__ == '__main__':
-    # THIS IS STRICTLY FOR TESTING PURPOSES #
-    x = Change("TEST3","123", 6804207484)
-    print(x)
+    DeleteAccount("TEST3")
