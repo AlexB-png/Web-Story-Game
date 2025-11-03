@@ -3,19 +3,19 @@
     {
       "name": "TEST",
       "Description": "This is a test for the events",
-      "1": true,
-      "2":true,
-      "3":true,
-      "4":false
+      "1": [true,"OPTION 1",2,2],
+      "2": [true,"OPTION 2",0,0],
+      "3": [true,"OPTION 3",-2,-2],
+      "4": [false,"OPTION 4",-5,-5]
     },
 
     {
       "name":"TEST2",
       "Description":"This is a second test for the events",
-      "1": true,
-      "2":true,
-      "3":false,
-      "4":false
+      "1": [true,"OPTION 1"],
+      "2": [true,"OPTION 2"],
+      "3": [false,"OPTION 3"],
+      "4": [false,"OPTION 4"]
     }
   ]
 }

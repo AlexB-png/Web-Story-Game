@@ -6,35 +6,42 @@ import eventsData from './Events.json';
 // Difficulty Classes //
 class Easy {
   constructor() {
+    this.color = "rgb(151, 255, 77)"
+    this.Name = 'Easy'
     this.Height = 9
-    this.FinalChar = 'K'  // 10 Width
+    this.FinalChar = 'D'  // 10 Width
     this.RebelChance = 20 // % chance of rebel attack instead of event // Roughly 2 Attacks
     this.Grace = 2 // Grace Period In Turns
     this.StarterMoney = 30
+    this.Multiplier = 1
   }
 }
 
 class Medium {
   constructor() {
+    this.color = "rgb(255, 215, 82)"
+    this.Name = "Medium"
     this.Height = 7
-    this.FinalChar = 'P' // 15 Width
+    this.FinalChar = 'O' // 15 Width
     this.RebelChance = 20 // % chance of rebel attack instead of event // Roughly 3 Attacks
     this.Grace = 1 // Grace Period In Turns
     this.StarterMoney = 20
+    this.Multiplier = 1.25
   }
 }
 
 class Hard {
   constructor() {
+    this.color = "rgb(255, 77, 77)"
+    this.Name = "Hard"
     this.Height = 5
-    this.FinalChar = 'U' // 20 Width
+    this.FinalChar = 'T' // 20 Width
     this.RebelChance = 20 // % chance of rebel attack instead of event // Roughly 4 attacks
     this.Grace = 0 // Grace Period In Turns
     this.StarterMoney = 10
+    this.Multiplier = 1.5
   }
 }
-
-const difficulty = {Easy, Medium, Hard}
 //
 
 // This is the bridge between the start, movement and the events //
@@ -44,17 +51,21 @@ export function GamePage(LoginStatus) {
 
   switch (renderPage) {
     case "Intro":
-      return <Tutorial LoginStatus={LoginStatus} setRenderPage = {setRenderPage}/>
+      return <Difficulty LoginStatus={LoginStatus} setRenderPage = {setRenderPage}/>
     case "Move":
       return <Home LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} setRenderPage={setRenderPage} renderPage = {renderPage}/>
     case "Event":
       return <Event LoginStatus={LoginStatus} setRenderPage={setRenderPage} playerLocation={playerLocation}/>
+    case "Boss":
+      return <Boss />
   }
 }
 //
 
-function Tutorial({ LoginStatus , setRenderPage }) {
+function Difficulty({ LoginStatus , setRenderPage }) {
   const navigate = useNavigate();
+
+  const [difficulty, setDifficulty] = useState(() => new Easy())
 
   // I don't like url manipulation //
   useEffect(() => {
@@ -64,14 +75,26 @@ function Tutorial({ LoginStatus , setRenderPage }) {
   }, [LoginStatus])
   //
 
-  var Text = 'Hello World!'
+  var Text = 'Choose A Difficulty'
   
   return(
     <>
-    <div>
-      <h1>{Text}</h1>
+    <div className='Selection'>
+      <div className='Difficulty'>
+        <h1>{Text}</h1>
 
-      <button onClick={() => setRenderPage("Move")}>Advance</button>
+        <button onClick={() => setDifficulty(new Easy())}>Easy Mode</button>
+        <button onClick={() => setDifficulty(new Medium())}>Medium Mode</button>
+        <button onClick={() => setDifficulty(new Hard())}>Hard Mode</button>
+
+        
+
+        <button onClick={() => setRenderPage("Move")}>Continue!</button>
+      </div>
+      <div style={{color: difficulty.color}} className='Explanation'>
+        <h1 >{difficulty.Name}</h1>
+        <h1>TEST2</h1>
+      </div>
     </div>
     </>
   )
@@ -82,20 +105,16 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, r
   const navigate = useNavigate();
 
   const MaxRows = 9 // set to a multiple of 2x+1
-  const FinalColumn = 'U' // Remember: This character is NOT included USE "[" if you want Z
+  const FinalColumn = Difficulty.FinalChar
 
 
-  // Takes UTF 16 code of the character, thwn increments by 1 to get new character //
+  // Takes UTF 16 code of the character, then increments by 1 to get new character //
   function NextCharacter(character) {
     var code = character.charCodeAt(0)
     code += 1
-
-    if (String.fromCharCode(code) == FinalColumn) {
-      return 0
-    } else {
-      return String.fromCharCode(code)
+    return String.fromCharCode(code)
     }
-  }
+  
   //
 
   // I don't like url manipulation //
@@ -127,7 +146,8 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, r
       downButton.disabled = false
     }
 
-    if (NextCharacter(playerLocation[0]) == 0) {
+    if ((playerLocation[0]) == NextCharacter(FinalColumn)) {
+      setRenderPage("Boss")
       downButton.disabled = true
       upButton.disabled = true
     }
@@ -146,11 +166,6 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, r
       var NextPos = NextLetter + NextNumberUp
     } else {
       var NextPos = NextLetter + NextNumberDown
-    }
-
-    if (NextCharacter(playerLocation[0]) == FinalColumn) {
-      downButton.disabled = true
-      upButton.disabled = true
     }
 
     setPlayerLocation(NextPos)
@@ -180,6 +195,11 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, r
 
 // This is the redirect after a direction is chosen // Where the events happen //
 function Event({ setRenderPage , playerLocation }) {
+  function Event(index) {
+    console.log(event[index])
+    setRenderPage("Move")
+  }
+  
   const flip = (bool) => !bool
   
   const [event, SetEvent] = useState(null)
@@ -192,7 +212,7 @@ function Event({ setRenderPage , playerLocation }) {
     SetEvent(random)
   }, [])
 
-  if (!event) return <h1>Loading...</h1>
+  if (!event) return <h1>Loading...</h1>  // Fixes error to do with undefined variables //
 
   if (event) console.log(event.Description)
   
@@ -205,10 +225,10 @@ function Event({ setRenderPage , playerLocation }) {
         <h1>{event?.Description}</h1>
 
         <div className='Square'>
-          <button id='Button1' disabled={flip(event["1"])} onClick={() => setRenderPage("Move")}>EVENT CHOICE 1</button>
-          <button id='Button2' disabled={flip(event["2"])} onClick={() => setRenderPage("Move")}>EVENT CHOICE 2</button>
-          <button id='Button3' disabled={flip(event["3"])} onClick={() => setRenderPage("Move")}>EVENT CHOICE 3</button>
-          <button id='Button4' disabled={flip(event["4"])} onClick={() => setRenderPage("Move")}>EVENT CHOICE 4</button>
+          <button id='Button1' disabled={flip(event["1"][0])} onClick={() => Event("1")}>{event["1"][1]}</button>
+          <button id='Button2' disabled={flip(event["2"][0])} onClick={() => Event("2")}>{event["2"][1]}</button>
+          <button id='Button3' disabled={flip(event["3"][0])} onClick={() => Event("3")}>{event["3"][1]}</button>
+          <button id='Button4' disabled={flip(event["4"][0])} onClick={() => Event("4")}>{event["4"][1]}</button>
         </div>
       </div>
     </>
@@ -241,3 +261,13 @@ export function HowToPlay() {
   )
 }
 //
+
+function Boss() {
+  console.log("Boss Time!")
+  
+  return(
+    <>
+      <h1>Hello World!</h1>
+    </>
+  )
+}
