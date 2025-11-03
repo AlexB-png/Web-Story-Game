@@ -1,7 +1,7 @@
 // Imports
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import { LoginPage, NewAccount, ForgotPassword } from './LoginPage/LoginPages'
+import { LoginPage, NewAccount, ForgotPassword , Settings} from './LoginPage/LoginPages'
 import { Game , HowToPlay, GamePage} from './HomePage/HomePage'
 //
 
@@ -24,6 +24,7 @@ function App() {
       <Route path="/" element={<LoginPage LoginStatus={LoginStatus} setLoginStatus={setLoginStatus} />} />
       <Route path="/NewAccount" element={<NewAccount />} />
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
+      <Route path="/Settings" element={<Settings />} />
       <Route path="/Play" element={<Game LoginStatus={LoginStatus} />} />
       <Route path="/Game" element={<GamePage LoginStatus={LoginStatus} />} />
       <Route path="/HowToPlay" element={< HowToPlay />} />

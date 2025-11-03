@@ -93,26 +93,35 @@
   align-items: center;
   gap: 10vh;
   width: 30vw;
+  font-size: 1vw;
 
   
   button {
     width: 15vw;
     height: clamp(50px, 5vh, 100px);
     border-radius: 10px;
-    font-size: 1vw;
     background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
     border-color: rgb(164, 202, 247);
+    font-size: 2vw;
+  }
+
+  h1 {
+    margin: 0;
+    width: auto;
   }
 }
 
-.Explanation {
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  gap: 10vh;
-  justify-content: center;
-  align-items: center;
+.Backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
   width: 30vw;
+  height: 95vh;
+  border-radius: 20px;
+  display: flex;
+  font-size: clamp(5px,1vw,50px);
+  flex-direction: column;
+  gap: auto;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .Selection {

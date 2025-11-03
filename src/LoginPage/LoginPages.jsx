@@ -329,4 +329,14 @@ export function ForgotPassword() {
     )
 }
 //
-// 
+//
+
+export function Settings() {
+  return(
+    <div className="Settings">
+      <div className="Backdrop">
+        <h1>Welcome to the settings page</h1>
+      </div>
+    </div>
+  )
+}

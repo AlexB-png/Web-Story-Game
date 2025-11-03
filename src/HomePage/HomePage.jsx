@@ -6,11 +6,12 @@ import eventsData from './Events.json';
 // Difficulty Classes //
 class Easy {
   constructor() {
-    this.color = "rgb(151, 255, 77)"
+    this.color = "rgba(37, 89, 0, 1)"
     this.Name = 'Easy'
     this.Height = 9
-    this.FinalChar = 'D'  // 10 Width
-    this.RebelChance = 20 // % chance of rebel attack instead of event // Roughly 2 Attacks
+    this.FinalChar = 'J'  // 10 Width
+    this.FinalColumnNumber = 10
+    this.RebelChance = 15 // % chance of rebel attack instead of event // Roughly 2 Attacks
     this.Grace = 2 // Grace Period In Turns
     this.StarterMoney = 30
     this.Multiplier = 1
@@ -19,10 +20,11 @@ class Easy {
 
 class Medium {
   constructor() {
-    this.color = "rgb(255, 215, 82)"
+    this.color = "rgba(255, 207, 48, 1)"
     this.Name = "Medium"
     this.Height = 7
     this.FinalChar = 'O' // 15 Width
+    this.FinalColumnNumber = 15
     this.RebelChance = 20 // % chance of rebel attack instead of event // Roughly 3 Attacks
     this.Grace = 1 // Grace Period In Turns
     this.StarterMoney = 20
@@ -32,28 +34,31 @@ class Medium {
 
 class Hard {
   constructor() {
-    this.color = "rgb(255, 77, 77)"
+    this.color = "rgba(138, 0, 0, 1)"
     this.Name = "Hard"
     this.Height = 5
     this.FinalChar = 'T' // 20 Width
-    this.RebelChance = 20 // % chance of rebel attack instead of event // Roughly 4 attacks
+    this.FinalColumnNumber = 20
+    this.RebelChance = 25 // % chance of rebel attack instead of event // Roughly 4 attacks
     this.Grace = 0 // Grace Period In Turns
     this.StarterMoney = 10
     this.Multiplier = 1.5
   }
 }
+
 //
 
 // This is the bridge between the start, movement and the events //
 export function GamePage(LoginStatus) {
   const [playerLocation, setPlayerLocation] = useState("A1")
   const [renderPage, setRenderPage] = useState("Intro")
+  const [difficulty, setDifficulty] = useState(() => new Easy())
 
   switch (renderPage) {
     case "Intro":
-      return <Difficulty LoginStatus={LoginStatus} setRenderPage = {setRenderPage}/>
+      return <Difficulty LoginStatus={LoginStatus} setRenderPage = {setRenderPage} difficulty={difficulty} setDifficulty={setDifficulty}/>
     case "Move":
-      return <Home LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} setRenderPage={setRenderPage} renderPage = {renderPage}/>
+      return <Home LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} setRenderPage={setRenderPage} renderPage = {renderPage} difficulty={difficulty}/>
     case "Event":
       return <Event LoginStatus={LoginStatus} setRenderPage={setRenderPage} playerLocation={playerLocation}/>
     case "Boss":
@@ -62,10 +67,8 @@ export function GamePage(LoginStatus) {
 }
 //
 
-function Difficulty({ LoginStatus , setRenderPage }) {
+function Difficulty({ LoginStatus , setRenderPage, difficulty, setDifficulty }) {
   const navigate = useNavigate();
-
-  const [difficulty, setDifficulty] = useState(() => new Easy())
 
   // I don't like url manipulation //
   useEffect(() => {
@@ -77,6 +80,8 @@ function Difficulty({ LoginStatus , setRenderPage }) {
 
   var Text = 'Choose A Difficulty'
   
+  
+
   return(
     <>
     <div className='Selection'>
@@ -91,9 +96,14 @@ function Difficulty({ LoginStatus , setRenderPage }) {
 
         <button onClick={() => setRenderPage("Move")}>Continue!</button>
       </div>
-      <div style={{color: difficulty.color}} className='Explanation'>
+      <div style={{color: difficulty.color}} className='Backdrop'>
         <h1 >{difficulty.Name}</h1>
-        <h1>TEST2</h1>
+        <h1>Field Height: {((difficulty.Height - 1) / 2) + 1 }</h1>
+        <h1>Final Column: {difficulty.FinalChar} ({difficulty.FinalColumnNumber})</h1>
+        <h1>Attack Chance: {difficulty.RebelChance}%</h1>
+        <h1>Grace Period: {difficulty.Grace}</h1>
+        <h1>Starter Cash: {difficulty.StarterMoney}</h1>
+        <h1>Score Multiplier: {difficulty.Multiplier}</h1>
       </div>
     </div>
     </>
@@ -101,11 +111,11 @@ function Difficulty({ LoginStatus , setRenderPage }) {
 }
 
 // This is where the movement happens // 
-function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, renderPage }) {
+function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, renderPage , difficulty}) {
   const navigate = useNavigate();
 
-  const MaxRows = 9 // set to a multiple of 2x+1
-  const FinalColumn = Difficulty.FinalChar
+  const MaxRows = difficulty.Height // set to a multiple of 2x+1
+  const FinalColumn = difficulty.FinalChar
 
 
   // Takes UTF 16 code of the character, then increments by 1 to get new character //
@@ -245,6 +255,8 @@ export function Game() {
         <button onClick={() => navigate("/Game")}>Play!</button>
 
         <button onClick={() => window.open(`${window.location.origin}/HowToPlay`, "_blank", "noopener,noreferrer")}>How To Play?</button>
+
+        <button onClick={() => navigate("/Settings")}>Settings!</button>
       </div>
     </>
   )
