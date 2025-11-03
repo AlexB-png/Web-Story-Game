@@ -7,20 +7,22 @@
 
 // Pick which one you want :) //
 * {
-    //font-family: "Pixelify Sans";
-    //font-family: "Bitcount Grid Single", "Pixelify Sans";
-    font-family: "Share Tech Mono","Bitcount Grid Single", "Pixelify Sans";
-    font-weight: 400;
+  //font-family: "Pixelify Sans";
+  //font-family: "Bitcount Grid Single", "Pixelify Sans";
+  font-family: "Share Tech Mono", "Bitcount Grid Single", "Pixelify Sans";
+  font-weight: 400;
 }
+
 //
 
 // Defaults for every router page
 body {
-    margin: 0;   // Why does default margin exist //
-    padding: 0;  // Why does default padding exist //
-    background: linear-gradient(245deg,rgb(199, 191, 235) 0%, rgb(114, 166, 226) 100%);
-    overflow: hidden;  // I definitely dont want to have to scroll //
+  margin: 0; // Why does default margin exist //
+  padding: 0; // Why does default padding exist //
+  background: linear-gradient(245deg, rgb(199, 191, 235) 0%, rgb(114, 166, 226) 100%);
+  overflow: hidden; // I definitely dont want to have to scroll //
 }
+
 //
 
 
@@ -30,337 +32,349 @@ body {
 
 // Router for "/"
 .LoginWrapper {
-    height: 100vh;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .LoginPage {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    padding: 4vw;
+    gap: 5vh;
+    background: rgba(97, 97, 97, 0.1);
+    border-radius: 1vw;
 
-    .LoginPage {
-        display: flex;
+
+    .Username,
+    .Password {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      max-width: 1025px;
+      gap: 5vw;
+
+
+      input {
+        width: 25vw;
+        height: 2.5rem;
+        text-indent: 1vw;
+        border-radius: clamp(0.5vw, 0.75vw, 1vw);
+        font-size: 2ch;
+      }
+
+      h1 {
+        font-size: 3vw;
+      }
+
+      .title {
+        margin: 0;
+      }
+
+      @media (max-width: 1370px) {
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
-        padding: 4vw;
-        gap: 5vh;
-        background: rgba(97, 97, 97, 0.1);
-        border-radius: 1vw;
+        gap: 3rem;
 
-
-        .Username, .Password {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            max-width: 1025px;
-            gap: 5vw;
-
-            
-            input {
-                width: 25vw;
-                height: 2.5rem;
-                text-indent: 1vw;
-                border-radius: clamp(0.5vw,0.75vw,1vw);
-                font-size: 2ch;
-            }
-
-            h1 {
-                font-size: 3vw;
-            }
-
-            .title {
-                margin: 0;
-            }
-
-            @media (max-width: 1370px) {
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 3rem;
-
-                input {
-                    width: 50vw;
-                    height: 3vh;
-                    font-size: 2ch;
-                }
-
-                h1 {
-                    font-size: 5vw;
-                }
-            }
+        input {
+          width: 50vw;
+          height: 3vh;
+          font-size: 2ch;
         }
 
-        .LoginButton {
-            button {
-                width: 40vw;
-                height: clamp(3rem,3vh,5vh);
-                border-radius: 0.5vw;
-                font-size: clamp(1.5rem,1vw,1vw);
-                background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
-                border-color: rgb(164, 202, 247);
-                transition: transform 0.2s ease-in-out;
-            }
-
-            button:hover {
-                transform: scale(1.05);
-            }
+        h1 {
+          font-size: 5vw;
         }
-
-        .Links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            align-items: center;
-            gap: 5vh;
-            
-            * {
-                font-size: clamp(2rem,2vw,3vw);
-                transition: transform 0.2s ease-in-out;
-            }
-
-            *:hover {
-                transform: scale(1.05);
-            }
-        }
-
-        // Default for the status message
-        .Status {  // This is the div where the text is stored //
-            max-height: 0;
-            transition: max-height 0.2s ease-in-out;
-
-            .StatusMessage {  // This is the actual text //
-                opacity: 0;
-                transition: opacity 0.2s ease-in-out;
-            }
-
-            .StatusMessage.visible {
-                opacity: 1;
-            }
-        }
-        //
-        
-        // After "login!" button is pressed
-        .Status.visible {
-            max-height: 4vh;  // its a height for the transition //
-        }
+      }
     }
+
+    .LoginButton {
+      button {
+        width: 40vw;
+        height: clamp(3rem, 3vh, 5vh);
+        border-radius: 0.5vw;
+        font-size: clamp(1.5rem, 1vw, 1vw);
+        background: linear-gradient(245deg, rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+        border-color: rgb(164, 202, 247);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    .Links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+      gap: 5vh;
+
+      * {
+        font-size: clamp(2rem, 2vw, 3vw);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      *:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    // Default for the status message
+    .Status {
+      // This is the div where the text is stored //
+      max-height: 0;
+      transition: max-height 0.2s ease-in-out;
+
+      .StatusMessage {
+        // This is the actual text //
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+      }
+
+      .StatusMessage.visible {
+        opacity: 1;
+      }
+    }
+
+    //
+
+    // After "login!" button is pressed
+    .Status.visible {
+      max-height: 4vh; // its a height for the transition //
+    }
+  }
 }
+
 //
 
 // Router "/NewAccount"
 .SignUpWrapper {
-    height: 100vh;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(245deg, rgb(114, 166, 226) 0%, rgb(199, 191, 235) 100%);
+
+  .SignUp {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(245deg,rgb(114, 166, 226) 0%, rgb(199, 191, 235) 100%);
+    flex-direction: column;
+    padding: 4vw;
+    gap: 5vh;
+    background: rgba(97, 97, 97, 0.1);
+    border-radius: 1vw;
 
-    .SignUp {
-        display: flex;
+    background-color: rgba(255, 255, 255, 0.267);
+
+    .NewUserInput,
+    .NewPassInput {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      max-width: 1025px;
+      gap: 5vw;
+
+      input {
+        width: 30vw;
+        border-radius: 1vw;
+        text-indent: 1vw;
+        height: clamp(1rem, 5vh, 6vh);
+        font-size: 2vh;
+      }
+
+      h1 {
+        font-size: 3vw;
+      }
+
+      @media (max-width: 1370px) {
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
-        padding: 4vw;
-        gap: 5vh;
-        background: rgba(97, 97, 97, 0.1);
-        border-radius: 1vw;
+        gap: 1rem;
 
-        background-color: rgba(255, 255, 255, 0.267);
-
-        .NewUserInput, .NewPassInput {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            max-width: 1025px;
-            gap: 5vw;
-
-            input {
-                width: 30vw;
-                border-radius: 1vw;
-                text-indent: 1vw;
-                height: clamp(1rem,5vh,6vh);
-                font-size: 2vh;
-            }
-
-            h1 {
-                font-size: 3vw;
-            }
-
-            @media (max-width: 1370px) {
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 1rem;
-
-                input {
-                    width: 50vw;
-                    font-size: 2vh;
-                    height: clamp(2rem,4vh,4vh)
-                }
-
-                h1 {
-                    font-size: 5vw;
-                }
-            }
+        input {
+          width: 50vw;
+          font-size: 2vh;
+          height: clamp(2rem, 4vh, 4vh)
         }
 
-        .CreateNewButton {
-            button {
-                width: 40vw;
-                height: clamp(3rem,3vh,5vh);
-                border-radius: 0.5vw;
-                font-size: clamp(1.5rem,1vw,1vw);
-                background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
-                border-color: rgb(164, 202, 247);
-                transition: transform 0.2s ease-in-out;
-            }
-
-            button:hover {
-                transform: scale(1.05);
-            }}
-
-        .StatusBar {
-            height: 0vh;
-            transition: height 0.45s ease-in-out;  // When It Shrinks Down //
-            display: flex;
-            justify-content: center;
-            width: 70vw;
-
-            .StatusText {
-                font-size: clamp(2rem,3vw,4vw);
-                opacity: 0;
-                transition: opacity 0.25s ease-in-out;
-            }
-            .StatusText.visible {
-                opacity: 1;
-                transition: opacity 0.45s ease-in-out;
-            }
+        h1 {
+          font-size: 5vw;
         }
+      }
+    }
 
-        .StatusBar.visible {
-            height: 7vh;
-            transition: height 0.25s ease-in-out;  // When It Expand Out // 
-        }
+    .CreateNewButton {
+      button {
+        width: 40vw;
+        height: clamp(3rem, 3vh, 5vh);
+        border-radius: 0.5vw;
+        font-size: clamp(1.5rem, 1vw, 1vw);
+        background: linear-gradient(245deg, rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+        border-color: rgb(164, 202, 247);
+        transition: transform 0.2s ease-in-out;
+      }
 
-        .ReturnDiv {
-            .ReturnButton {
-                width: 40vw;
-                height: clamp(3rem,3vh,5vh);
-                border-radius: 0.5vw;
-                font-size: clamp(1.5rem,1vw,1vw);
-                background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
-                border-color: rgb(164, 202, 247);
-                transition: transform 0.2s ease-in-out;
-            }
+      button:hover {
+        transform: scale(1.05);
+      }
+    }
 
-            .ReturnButton:hover {
-                transform: scale(1.05);
-            }
-        }
+    .StatusBar {
+      height: 0vh;
+      transition: height 0.45s ease-in-out; // When It Shrinks Down //
+      display: flex;
+      justify-content: center;
+      width: 70vw;
+
+      .StatusText {
+        font-size: clamp(2rem, 3vw, 4vw);
+        opacity: 0;
+        transition: opacity 0.25s ease-in-out;
+      }
+
+      .StatusText.visible {
+        opacity: 1;
+        transition: opacity 0.45s ease-in-out;
+      }
+    }
+
+    .StatusBar.visible {
+      height: 7vh;
+      transition: height 0.25s ease-in-out; // When It Expand Out // 
+    }
+
+    .ReturnDiv {
+      .ReturnButton {
+        width: 40vw;
+        height: clamp(3rem, 3vh, 5vh);
+        border-radius: 0.5vw;
+        font-size: clamp(1.5rem, 1vw, 1vw);
+        background: linear-gradient(245deg, rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+        border-color: rgb(164, 202, 247);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .ReturnButton:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
 }
-}
+
 //
 
 // Router "/ForgotPassword"
 .ForgotDiv {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+
+  .ForgotBackingDiv {
     display: flex;
-    height: 100vh;
-    justify-content: center;
     align-items: center;
-    
-    .ForgotBackingDiv {
+    justify-content: center;
+
+
+    border-radius: 3vw;
+
+    background-color: rgba(0, 0, 0, 0.100);
+    width: 35vw;
+    height: 75vh;
+    padding: 5vw;
+
+    .ForgotContent {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      max-width: 1025px;
+      flex-direction: column;
+      gap: 5vw;
+
+
+      .ForgotUser,
+      .ForgotPass,
+      .ForgotCode {
         display: flex;
+        flex-direction: row;
+        height: 5vh;
         align-items: center;
-        justify-content: center;
-        
+        gap: 3vh;
 
-        border-radius: 3vw;
-        
-        background-color: rgba(0, 0, 0, 0.100);
-        width: 35vw;
-        height: 75vh;
-        padding: 5vw;
-
-        .ForgotContent {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            max-width: 1025px;
-            flex-direction: column;
-            gap: 5vw;
-            
-
-            .ForgotUser, .ForgotPass, .ForgotCode {
-                display: flex;
-                flex-direction: row;
-                height: 5vh;
-                align-items: center;
-                gap:3vh;
-
-                h1 {
-                    width: 15vw;
-                }
-
-                input {
-                    width: 20vw;
-                    height: 4vh;
-                    text-indent: 1vw;
-                    border-radius: 1vw;
-                    font-size: clamp(1rem,1.5vw,3vw);
-                }
-
-                @media (max-width: 1370px) {
-                    flex-direction: column;
-                    justify-content: center;
-                }
-            }
-
-            .ForgotButton {
-                button {
-                    width: 25vw;
-                    height: 5vh;
-                    font-size: clamp(1rem, 1vw, 3vw);
-                    border-radius: 2vw;
-
-                    background: linear-gradient(245deg,rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
-                    border-color: rgb(164, 202, 247);
-
-                    scale:1;
-                    transition: scale 0.25s ease-in-out;
-                }
-
-                button:hover {
-                    scale:1.05;
-                    transition: scale 0.25s ease-in-out;
-                }
-            }
-            
-            .ForgotStatus {
-                margin-top: -3vw;
-                max-height: 0vh;
-                transition: max-height 0.2s ease-in-out;
-
-                .ForgotStatusMessage {
-                    opacity: 0;
-                    transition: opacity 0.2s ease-in-out;
-                    font-size: clamp(1rem,2vw,3vw);
-                }
-
-                .ForgotStatusMessage.visible {
-                    opacity: 1;
-                }
-            }
-
-            .ForgotStatus.visible {
-                max-height: 3vh;
-            }
-
-            @media (max-width: 1370px) {
-                gap: 10vh;
-            }
-
-
+        h1 {
+          width: 15vw;
         }
+
+        input {
+          width: 20vw;
+          height: 4vh;
+          text-indent: 1vw;
+          border-radius: 1vw;
+          font-size: clamp(1rem, 1.5vw, 3vw);
+        }
+
+        @media (max-width: 1370px) {
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+
+      .ForgotButton {
+        button {
+          width: 25vw;
+          height: 5vh;
+          font-size: clamp(1rem, 1vw, 3vw);
+          border-radius: 2vw;
+
+          background: linear-gradient(245deg, rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+          border-color: rgb(164, 202, 247);
+
+          scale: 1;
+          transition: scale 0.25s ease-in-out;
+        }
+
+        button:hover {
+          scale: 1.05;
+          transition: scale 0.25s ease-in-out;
+        }
+      }
+
+      .ForgotStatus {
+        margin-top: -3vw;
+        max-height: 0vh;
+        transition: max-height 0.2s ease-in-out;
+
+        .ForgotStatusMessage {
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
+          font-size: clamp(1rem, 2vw, 3vw);
+        }
+
+        .ForgotStatusMessage.visible {
+          opacity: 1;
+        }
+      }
+
+      .ForgotStatus.visible {
+        max-height: 3vh;
+      }
+
+      @media (max-width: 1370px) {
+        gap: 10vh;
+      }
+
+
     }
+  }
 }
+
 //
 .Settings {
   display: flex;
@@ -371,11 +385,55 @@ body {
   .Backdrop {
     height: 85vh;
     width: 60vw;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.15);
     border-radius: 10px;
 
-    display: flex;
-    flex-direction: column;
+    .center {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: space-evenly;
+      align-items: center;
 
+      .Code {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 3vw;
+        height: 10vh;
+
+        button {
+          width: 10vw;
+          height: clamp(3rem, 3vh, 5vh);
+          border-radius: 0.5vw;
+          font-size: clamp(1.5rem, 1vw, 1vw);
+          background: linear-gradient(245deg, rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+          border-color: rgb(164, 202, 247);
+          transition: transform 0.2s ease-in-out;
+          height: 5vh;
+        }
+
+        input {
+          height: 5vh;
+          width: 20vw;
+          font-size: clamp(5px, 3vw, 20px);
+        }
+      }
+
+      .Delete {
+        button {
+          width: 20vw;
+          height: clamp(3rem, 3vh, 5vh);
+          border-radius: 0.5vw;
+          font-size: clamp(1vw,2vh,3vw);
+          background: linear-gradient(245deg, rgb(189, 215, 245) 0%, rgb(218, 211, 253) 100%);
+          border-color: rgb(164, 202, 247);
+          transition: transform 0.2s ease-in-out;
+          height: 5vh;
+        }
+      }
+
+    }
   }
 }

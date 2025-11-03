@@ -86,23 +86,26 @@ def Change(username, password, code):
 
 
 def test():
-    # Variables #
-    user = input("Username: ")
-    password = input("Password: ")
-    code = input("Code: ")
-    Create(user, password)
+  # Variables #
+  user = input("Username: ")
+  password = input("Password: ")
+  code = input("Code: ")
+  Create(user, password)
 
 
 def init_db():
-    connection = sqlite3.connect(r"Data.db")
-    cursor = connection.cursor()
-    try: 
-        cursor.execute("SELECT * from users")
-    except:
-        print("failed To connect to database")
-        cursor.execute("CREATE TABLE users(user, pass, secret_code)")
-    connection.close()
+  connection = sqlite3.connect(r"Data.db")
+  cursor = connection.cursor()
+  try: 
+      cursor.execute("SELECT * from users")
+  except:
+      print("failed To connect to database")
+      cursor.execute("CREATE TABLE users(user, pass, secret_code)")
+  connection.close()
 
+def DeleteAccount(username):
+  connection = sqlite3.connect(r"Data.db")
+  cursor = connection.cursor()
 
 if __name__ == '__main__':
     # THIS IS STRICTLY FOR TESTING PURPOSES #

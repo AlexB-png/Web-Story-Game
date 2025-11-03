@@ -17,14 +17,15 @@ function delay(miliseconds) {
 function App() {
   // Variables for preventing URL manipulation
   const [LoginStatus, setLoginStatus] = useState(false)  // Changes if the login was successful //
+  const [username, setUsername] = useState(null)
   // 
 
   return (
     <Routes>
-      <Route path="/" element={<LoginPage LoginStatus={LoginStatus} setLoginStatus={setLoginStatus} />} />
+      <Route path="/" element={<LoginPage LoginStatus={LoginStatus} setLoginStatus={setLoginStatus} setUsername = {setUsername}/>} />
       <Route path="/NewAccount" element={<NewAccount />} />
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
-      <Route path="/Settings" element={<Settings />} />
+      <Route path="/Settings" element={<Settings username={username} LoginStatus={LoginStatus}/>} />
       <Route path="/Play" element={<Game LoginStatus={LoginStatus} />} />
       <Route path="/Game" element={<GamePage LoginStatus={LoginStatus} />} />
       <Route path="/HowToPlay" element={< HowToPlay />} />

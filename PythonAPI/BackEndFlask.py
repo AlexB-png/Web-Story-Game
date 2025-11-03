@@ -40,6 +40,12 @@ def change():
 
     return jsonify({"Status": status, "Message": message})
 
+@app.route("/delete", methods=['POST'])
+def delete():
+    data = request.get_json()
+    print(data.get('username'))
+    return jsonify({"Status": True})
+
 
 if __name__ == '__main__':
     init_db()
