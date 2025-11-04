@@ -15,6 +15,7 @@ class Easy {
     this.Grace = 2 // Grace Period In Turns
     this.StarterMoney = 30
     this.Multiplier = 1
+    this.Health = 30
   }
 }
 
@@ -29,6 +30,7 @@ class Medium {
     this.Grace = 1 // Grace Period In Turns
     this.StarterMoney = 20
     this.Multiplier = 1.25
+    this.Health = 25
   }
 }
 
@@ -43,6 +45,7 @@ class Hard {
     this.Grace = 0 // Grace Period In Turns
     this.StarterMoney = 10
     this.Multiplier = 1.5
+    this.Health = 20
   }
 }
 
@@ -53,14 +56,24 @@ export function GamePage(LoginStatus) {
   const [playerLocation, setPlayerLocation] = useState("A1")
   const [renderPage, setRenderPage] = useState("Intro")
   const [difficulty, setDifficulty] = useState(() => new Easy())
+  const [health, setHealth] = useState(difficulty.Health)
+  const maxHealth = difficulty.Health
+
+  useEffect(() => {
+    setHealth(difficulty.Health)
+  }, [difficulty])
+
+  if (health <= 0) {
+    return <Dead playerLocation={playerLocation}/>
+  }
 
   switch (renderPage) {
     case "Intro":
       return <Difficulty LoginStatus={LoginStatus} setRenderPage = {setRenderPage} difficulty={difficulty} setDifficulty={setDifficulty}/>
     case "Move":
-      return <Home LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} setRenderPage={setRenderPage} renderPage = {renderPage} difficulty={difficulty}/>
+      return <Home health={health} maxHealth={maxHealth} LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} setRenderPage={setRenderPage} renderPage = {renderPage} difficulty={difficulty}/>
     case "Event":
-      return <Event LoginStatus={LoginStatus} setRenderPage={setRenderPage} playerLocation={playerLocation}/>
+      return <Event maxHealth={maxHealth} health={health} setHealth={setHealth} LoginStatus={LoginStatus} setRenderPage={setRenderPage} playerLocation={playerLocation}/>
     case "Boss":
       return <Boss />
   }
@@ -104,6 +117,7 @@ function Difficulty({ LoginStatus , setRenderPage, difficulty, setDifficulty }) 
         <h1>Grace Period: {difficulty.Grace}</h1>
         <h1>Starter Cash: {difficulty.StarterMoney}</h1>
         <h1>Score Multiplier: {difficulty.Multiplier}</h1>
+        <h1>Starter Health: {difficulty.Health}</h1>
       </div>
     </div>
     </>
@@ -111,8 +125,10 @@ function Difficulty({ LoginStatus , setRenderPage, difficulty, setDifficulty }) 
 }
 
 // This is where the movement happens // 
-function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, renderPage , difficulty}) {
+function Home({ health , maxHealth , LoginStatus, playerLocation, setPlayerLocation, setRenderPage, renderPage , difficulty}) {
   const navigate = useNavigate();
+
+  console.log(maxHealth)
 
   const MaxRows = difficulty.Height // set to a multiple of 2x+1
   const FinalColumn = difficulty.FinalChar
@@ -187,7 +203,7 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, r
   return (
     <>
       <div className='TopBar'>
-        <h1>{playerLocation}</h1>
+        <h1 id='health'>{ health }/{ maxHealth }</h1>
       </div>
       <div className='Content'>
         <div className='DirectionButtons'>
@@ -204,9 +220,15 @@ function Home({ LoginStatus, playerLocation, setPlayerLocation, setRenderPage, r
 
 
 // This is the redirect after a direction is chosen // Where the events happen //
-function Event({ setRenderPage , playerLocation }) {
+function Event({ health , setHealth , setRenderPage , playerLocation , maxHealth}) {
   function Event(index) {
     console.log(event[index])
+    var checkHealth = (health + event['Health'][parseInt(index)])
+    if (checkHealth > maxHealth) {
+      setHealth(maxHealth)
+    } else {
+      setHealth(checkHealth)
+    }
     setRenderPage("Move")
   }
   
@@ -235,10 +257,10 @@ function Event({ setRenderPage , playerLocation }) {
         <h1>{event?.Description}</h1>
 
         <div className='Square'>
-          <button id='Button1' disabled={flip(event["1"][0])} onClick={() => Event("1")}>{event["1"][1]}</button>
-          <button id='Button2' disabled={flip(event["2"][0])} onClick={() => Event("2")}>{event["2"][1]}</button>
-          <button id='Button3' disabled={flip(event["3"][0])} onClick={() => Event("3")}>{event["3"][1]}</button>
-          <button id='Button4' disabled={flip(event["4"][0])} onClick={() => Event("4")}>{event["4"][1]}</button>
+          <button id='Button1' disabled={flip(event["1"][0])} onClick={() => Event("1")}>{event["1"][1]} <span style={{color: "red"}}>{event['Health'][1]} Health </span> </button>
+          <button id='Button2' disabled={flip(event["2"][0])} onClick={() => Event("2")}>{event["2"][1]} <span style={{color: "red"}}>{event['Health'][2]} Health </span> </button>
+          <button id='Button3' disabled={flip(event["3"][0])} onClick={() => Event("3")}>{event["3"][1]} <span style={{color: "red"}}>{event['Health'][3]} Health </span> </button>
+          <button id='Button4' disabled={flip(event["4"][0])} onClick={() => Event("4")}>{event["4"][1]} <span style={{color: "red"}}>{event['Health'][4]} Health </span> </button>
         </div>
       </div>
     </>
@@ -258,6 +280,15 @@ export function Game() {
 
         <button onClick={() => navigate("/Settings")}>Settings!</button>
       </div>
+    </>
+  )
+}
+
+function Dead({ playerLocation }) {
+  return(
+    <>
+    <h1>You Died!</h1>
+    <h1>You made it to {playerLocation}</h1>
     </>
   )
 }

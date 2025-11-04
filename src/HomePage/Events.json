@@ -3,19 +3,21 @@
     {
       "name": "TEST",
       "Description": "This is a test for the events",
-      "1": [true,"OPTION 1",2,2],
-      "2": [true,"OPTION 2",0,0],
-      "3": [true,"OPTION 3",-2,-2],
-      "4": [false,"OPTION 4",-5,-5]
+      "1": [true,"OPTION 1"],
+      "2": [true,"OPTION 2"],
+      "3": [true,"OPTION 3"],
+      "4": [false,"OPTION 4"],
+      "Health":["",5,2,-5,0]
     },
 
     {
       "name":"TEST2",
       "Description":"This is a second test for the events",
-      "1": [true,"OPTION 1"],
-      "2": [true,"OPTION 2"],
+      "1": [true,"OPTION 1",5],
+      "2": [true,"Shoot Missiles at yourself :D"],
       "3": [false,"OPTION 3"],
-      "4": [false,"OPTION 4"]
+      "4": [false,"OPTION 4"],
+      "Health":["",5,-20,0,0]
     }
   ]
 }
