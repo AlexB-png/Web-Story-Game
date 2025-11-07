@@ -1,8 +1,8 @@
 {
   "Events": [
     {
-      "name": "TEST",
-      "Description": "This is a test for the events",
+      "name": "Repairs",
+      "Description": "A merchant offers you some repairs. For a small price of course",
       "1": [true,"OPTION 1"],
       "2": [true,"OPTION 2"],
       "3": [true,"OPTION 3"],
