@@ -6,8 +6,10 @@
       "1": [true,"OPTION 1"],
       "2": [true,"OPTION 2"],
       "3": [true,"OPTION 3"],
-      "4": [false,"OPTION 4"],
-      "Health":["",5,2,-5,0]
+      "4": [true,"OPTION 4"],
+      "Health":["",20,10,5,0],
+      "Money":["",15,10,5,0],
+      "Battle": false
     },
 
     {
@@ -17,7 +19,9 @@
       "2": [true,"Shoot Missiles at yourself :D"],
       "3": [false,"OPTION 3"],
       "4": [false,"OPTION 4"],
-      "Health":["",5,-20,0,0]
+      "Health":["",5,-20,0,0],
+      "Money":["",15,10,5,0],
+      "Battle": false
     }
   ]
 }

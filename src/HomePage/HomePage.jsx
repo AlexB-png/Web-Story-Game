@@ -58,6 +58,7 @@ export function GamePage(LoginStatus) {
   const [difficulty, setDifficulty] = useState(() => new Easy())
   const [health, setHealth] = useState(difficulty.Health)
   const maxHealth = difficulty.Health
+  const [money, setMoney] = useState(difficulty.StarterMoney)
 
   useEffect(() => {
     setHealth(difficulty.Health)
@@ -73,7 +74,7 @@ export function GamePage(LoginStatus) {
     case "Move":
       return <Home health={health} maxHealth={maxHealth} LoginStatus={LoginStatus} playerLocation={playerLocation} setPlayerLocation={setPlayerLocation} setRenderPage={setRenderPage} renderPage = {renderPage} difficulty={difficulty}/>
     case "Event":
-      return <Event maxHealth={maxHealth} health={health} setHealth={setHealth} LoginStatus={LoginStatus} setRenderPage={setRenderPage} playerLocation={playerLocation}/>
+      return <Event maxHealth={maxHealth} health={health} setHealth={setHealth} LoginStatus={LoginStatus} setRenderPage={setRenderPage} playerLocation={playerLocation} money={money} setMoney={setMoney}/>
     case "Boss":
       return <Boss />
   }
@@ -220,7 +221,7 @@ function Home({ health , maxHealth , LoginStatus, playerLocation, setPlayerLocat
 
 
 // This is the redirect after a direction is chosen // Where the events happen //
-function Event({ health , setHealth , setRenderPage , playerLocation , maxHealth}) {
+function Event({ health , setHealth , setRenderPage , playerLocation , maxHealth, money , setMoney}) {
   function Event(index) {
     console.log(event[index])
     var checkHealth = (health + event['Health'][parseInt(index)])
@@ -229,6 +230,13 @@ function Event({ health , setHealth , setRenderPage , playerLocation , maxHealth
     } else {
       setHealth(checkHealth)
     }
+
+    setMoney(money - event["Money"][parseInt(index)])
+
+    if (Event["Battle"] == true) {
+      console.log("Battle Time!")
+    }
+
     setRenderPage("Move")
   }
   
@@ -251,16 +259,18 @@ function Event({ health , setHealth , setRenderPage , playerLocation , maxHealth
   return (
     <>
       <div className='TopBar'>
+        <h1>{money} Money</h1>
         <h1>{event?.name}</h1>
+        <h1>{health} Health</h1>
       </div>
       <div className='EventContent'>
         <h1>{event?.Description}</h1>
 
         <div className='Square'>
-          <button id='Button1' disabled={flip(event["1"][0])} onClick={() => Event("1")}>{event["1"][1]} <span style={{color: "red"}}>{event['Health'][1]} Health </span> </button>
-          <button id='Button2' disabled={flip(event["2"][0])} onClick={() => Event("2")}>{event["2"][1]} <span style={{color: "red"}}>{event['Health'][2]} Health </span> </button>
-          <button id='Button3' disabled={flip(event["3"][0])} onClick={() => Event("3")}>{event["3"][1]} <span style={{color: "red"}}>{event['Health'][3]} Health </span> </button>
-          <button id='Button4' disabled={flip(event["4"][0])} onClick={() => Event("4")}>{event["4"][1]} <span style={{color: "red"}}>{event['Health'][4]} Health </span> </button>
+          <button id='Button1' disabled={flip(event["1"][0]) || money < event['Money'][1]} onClick={() => Event("1")}>{event["1"][1]} <span style={{color: "red"}}>{event['Health'][1]} Health </span>   <span style={{color: "green"}}>{event['Money'][1]} Money </span> </button>
+          <button id='Button2' disabled={flip(event["2"][0]) || money < event['Money'][2]} onClick={() => Event("2")}>{event["2"][1]} <span style={{color: "red"}}>{event['Health'][2]} Health </span>   <span style={{color: "green"}}>{event['Money'][2]} Money </span> </button>
+          <button id='Button3' disabled={flip(event["3"][0]) || money < event['Money'][3]} onClick={() => Event("3")}>{event["3"][1]} <span style={{color: "red"}}>{event['Health'][3]} Health </span>   <span style={{color: "green"}}>{event['Money'][3]} Money </span> </button>
+          <button id='Button4' disabled={flip(event["4"][0]) || money < event['Money'][4]} onClick={() => Event("4")}>{event["4"][1]} <span style={{color: "red"}}>{event['Health'][4]} Health </span>   <span style={{color: "green"}}>{event['Money'][4]} Money </span> </button>
         </div>
       </div>
     </>
